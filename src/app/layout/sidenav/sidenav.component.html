@@ -1,0 +1,36 @@
+<!-- Kontener Sidenav z cieniem zamiast ramki -->
+<aside class="w-72 h-full bg-white flex flex-col shadow-xl">
+
+  <!-- Nagłówek ze stałą wysokością (h-24), aby wyrównać go z Topnav -->
+  <div class="flex items-center h-24 px-6 border-b border-gray-200">
+    <mat-icon class="text-slate-700 text-2xl ">grid_view</mat-icon>
+    <span class="ml-3 text-lg font-semibold text-slate-700">Soft UI Dashboard</span>
+  </div>
+
+  <!-- Nawigacja z mniejszymi elementami -->
+  <nav class="flex-grow pt-6">
+    <ul class="px-4"> <!-- Mniejszy padding poziomy dla listy -->
+      <li *ngFor="let link of navLinks" class="mb-2">
+        <a [routerLink]="link.path" routerLinkActive #rla="routerLinkActive" [routerLinkActiveOptions]="{exact: true}"
+           class="flex items-center p-2 rounded-lg transition-colors duration-200"
+           [ngClass]="{
+             'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md': rla.isActive,
+             'text-slate-600 hover:bg-slate-100': !rla.isActive
+           }">
+          
+          <!-- Zmniejszony kontener ikony -->
+          <span class="w-7 h-7 flex items-center justify-center rounded-lg mr-3" 
+                [ngClass]="{'bg-white shadow-sm': rla.isActive}">
+            <!-- Zmniejszona ikona (przez font-size) -->
+            <mat-icon class="text-xl" [ngClass]="{'text-purple-600': rla.isActive, 'text-slate-500': !rla.isActive}">
+              {{ link.icon }}
+            </mat-icon>
+          </span>
+          <!-- Zmniejszony tekst -->
+          <span class="font-semibold text-xs">{{ link.label }}</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+</aside>

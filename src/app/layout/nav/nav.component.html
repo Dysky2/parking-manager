@@ -1,0 +1,33 @@
+<nav class="w-full bg-white py-4 px-8">
+  <div class="flex items-center justify-between">
+
+    <!-- Lewa strona: Breadcrumbs i Tytuł strony -->
+    <div>
+      <div class="text-sm text-gray-400">
+        <span>{{ breadcrumbs.parent }}</span>
+        <span class="mx-1">/</span>
+        <span class="text-gray-800">{{ breadcrumbs.current }}</span>
+      </div>
+      <h1 class="text-lg font-bold text-slate-700">{{ breadcrumbs.current }}</h1>
+    </div>
+
+    <!-- Prawa strona: Wyszukiwarka i Ikony -->
+    <div class="flex items-center space-x-6">
+
+      <!-- Ikony w nowej kolejności -->
+      <a href="#" class="text-gray-600 hover:text-gray-900">
+        <mat-icon class="text-xl">notifications</mat-icon>
+      </a>
+
+      <a href="#" class="text-gray-600 hover:text-gray-900">
+        <mat-icon class="text-xl">settings</mat-icon>
+      </a>
+      
+      <a href="#" class="flex items-center text-gray-600 hover:text-gray-900">
+        <mat-icon>person</mat-icon>
+        <span class="ml-2 text-sm font-semibold">{{ userName }}</span>
+      </a>
+
+    </div>
+  </div>
+</nav>
