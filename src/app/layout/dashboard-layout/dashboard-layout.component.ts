@@ -4,7 +4,7 @@ import { NavComponent } from '../nav/nav.component';
 @Component({
   selector: 'app-dashboard-layout',
   standalone: true,
-  imports: [NavComponent],
+  imports: [],
   templateUrl: './dashboard-layout.component.html',
   styleUrl: './dashboard-layout.component.scss'
 })

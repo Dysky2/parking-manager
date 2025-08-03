@@ -1,4 +1,31 @@
-@import '../../../../styles.scss';
+$bg-color: #f4f7fa;
+$card-color: white;
+$text-color: #111827;
+
+$sidenav-color: white;
+$sidenav-text-color: #111827;
+$sidenav-hover-color: rgb(226, 240, 237);
+$sidenav-bg-active: rgb(211, 212, 212);
+$sidenav-icon-color: rgb(25, 168, 115);
+
+$products-border-color: rgb(168, 168, 168);
+
+$add-to-cart: #cf142b;;
+
+$primary: rgb(13, 12, 34);
+$primary-light: #22211F;
+$primary-disabled: #363435;
+$primary-lighter: #454344;
+$secondary: #1D1D1D;
+$text: #11181C;
+$text-gray: #687076;
+$text-placeholder: #8890A7;
+$border: #DFE3E6;
+$btn-bg: #EDEDED;
+$input-bg: #F1F2F3;
+$background: #F8F8FF;
+$error: #e5484d;
+
 
 :host {
     width: 100%;

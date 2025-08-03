@@ -1,1 +1,146 @@
-<p>dashboard works!</p>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+    <div class="bg-white rounded-xl shadow-md p-6 ">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-slate-500">Total Spots</p>
+                <div class="flex items-baseline mt-1 space-x-2">
+                    <p class="text-xl font-bold text-slate-800">100</p>
+                    <!-- <span class="text-sm font-bold text-green-500">+55%</span> -->
+                </div>
+            </div>
+            <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-black text-white">
+                <mat-icon>local_parking</mat-icon>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-md p-6 ">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-slate-500">Active Spots</p>
+                <div class="flex items-baseline mt-1 space-x-2">
+                    <p class="text-xl font-bold text-slate-800">43</p>
+                    <!-- <span class="text-sm font-bold text-green-500">+55%</span> -->
+                </div>
+            </div>
+            <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-green-500 text-white">
+                <mat-icon>check</mat-icon>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bg-white rounded-xl shadow-md p-6 ">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-slate-500">Occupied</p>
+                <div class="flex items-baseline mt-1 space-x-2">
+                    <p class="text-xl font-bold text-slate-800">100</p>
+                    <!-- <span class="text-sm font-bold text-green-500">+55%</span> -->
+                </div>
+            </div>
+            <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-red-500 text-white">
+                <mat-icon>close</mat-icon>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-md p-6 ">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-slate-500">Occupancy Rate</p>
+                <div class="flex items-baseline mt-1 space-x-2">
+                    <p class="text-xl font-bold text-slate-800">44%</p>
+                    <!-- <span class="text-sm font-bold text-green-500">+55%</span> -->
+                </div>
+            </div>
+            <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-blue-400 text-white">
+                <mat-icon>show_chart</mat-icon>
+            </div>
+        </div>
+    </div>
+
+    <div class="md:col-span-4 bg-white rounded-xl shadow-md p-6">
+        <p-table 
+        #dt2
+        [value]="products"
+        [(selection)]="selectedProducts"
+        dataKey="code"
+        [rowHover]="true"
+        [rows]="5"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[5, 10, 25, 50]"
+        [loading]="loading"
+        [paginator]="true"
+        [filterDelay]="0"
+        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+        id="parking-table"
+        styleClass="parking-table"
+        >
+            <ng-template pTemplate="caption">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-bold">Lista miejsc</h2>
+                    <p-button icon="pi pi-refresh"></p-button>
+                </div>
+            </ng-template>
+        
+            <ng-template pTemplate="header">
+                <tr>
+                    <th></th>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                </tr>
+                <tr>
+                    <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
+                    <th>
+                        <p-columnFilter
+                        type="text"
+                        field="code"
+                        placeholder="Search by Code"
+                        ariaLabel="Filter Code"
+                        ></p-columnFilter>
+                    </th>
+                    <th>
+                        <p-columnFilter
+                        type="text"
+                        field="name"
+                        placeholder="Search by name"
+                        ariaLabel="Filter name"
+                        ></p-columnFilter>
+                    </th>
+                    <th>
+                        <p-columnFilter
+                        type="text"
+                        field="category"
+                        placeholder="Search by category"
+                        ariaLabel="Filter category"
+                        ></p-columnFilter>
+                    </th>
+                    <th>
+                        <p-columnFilter
+                        type="text"
+                        field="quantity"
+                        placeholder="Search by quantity"
+                        ariaLabel="Filter quantity"
+                        ></p-columnFilter>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-product>
+                <tr>
+                    <td>
+                        <p-tableCheckbox [value]="product" />
+                    </td>
+                    <td>{{product.code}}</td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.category}}</td>
+                    <td>{{product.quantity}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+</div>
+
