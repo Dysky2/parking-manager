@@ -7,7 +7,7 @@ import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-la
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, AngularMaterialModule,MainLayoutComponent],
+  imports: [RouterOutlet,  AngularMaterialModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
