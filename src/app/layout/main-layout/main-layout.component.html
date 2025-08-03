@@ -1,12 +1,23 @@
-<!-- <div *ngIf="(path  | async) !== '/login' && (path  | async) !== '/signup'"  class="sideNav_container" [classList]="isLeftSidebarCollapsed() ? 'sidenNav-close' : 'sideNav_container'">
-</div> -->
+<!-- Układ dwukolumnowy -->
 <div class="flex h-screen bg-white">
+
+  <!-- Lewa kolumna: Sidenav (w stałym kontenerze) -->
+  <div class="sideNav_container">
     <app-sidenav></app-sidenav>
-    <main class="flex-grow bg-white">
-      <!-- To jest ciemny blok treści z obrazka -->
-      <div class="w-full h-full">
-        <!-- Tutaj umieszczamy główną treść strony, np. dashboard -->
-        <router-outlet></router-outlet>
-      </div>
+  </div>
+
+  <!-- Prawa kolumna z Topnavem i treścią strony -->
+  <div class="flex-1 flex flex-col">
+
+    <!-- Topnav na górze -->
+    <header>
+      <app-nav></app-nav>
+    </header>
+
+    <!-- Tutaj router będzie wstawiał komponenty podrzędne (Dashboard, Users itp.) -->
+    <main class="flex-1 p-8">
+      <router-outlet></router-outlet>
     </main>
+    
+  </div>
 </div>
