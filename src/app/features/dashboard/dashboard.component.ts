@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -6,31 +7,39 @@ import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [MatIconModule , TableModule, ButtonModule],
+  imports: [MatIconModule , TableModule, ButtonModule, CommonModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
-  products!: any[];
-  selectedProducts: {} | null = null;
-
+  activeSessions!: any[];
+  selectedSessions: any[] | {} | null = null;
   loading: boolean = true;
 
+  reservations!: any[];
+  selectedReservations: {} | null = null;
+
   ngOnInit(): void {
-    this.products = [
-      {code: 'f230fh0g3', name: 'Bamboo Watch', category: 'Accessories', quantity: 24},
-      {code: 'nvklal433', name: 'Black Watch', category: 'Accessories', quantity: 61},
-      {code: 'xx21vz1fg', name: 'Blue Band', category: 'Fitness', quantity: 2},
-      {code: 'z32aa1f4g3', name: 'Orange Band', category: 'Fitness', quantity: 5},
-      {code: 'h23a1f4g3', name: 'Pink Band', category: 'Fitness', quantity: 40},
-      {code: 'v23a1f4g3', name: 'Purple Band', category: 'Fitness', quantity: 12},
-      {code: 'a23a1f4g3', name: 'Red Band', category: 'Fitness', quantity: 24},
-      {code: 'b23a1f4g3', name: 'Yellow Band', category: 'Fitness', quantity: 18},
-      {code: 'c23a1f4g3', name: 'Green Band', category: 'Fitness', quantity: 30},
-      {code: 'd23a1f4g3', name: 'Black Band', category: 'Fitness', quantity: 15},
-      {code: 'e23a1f4g3', name: 'White Band', category: 'Fitness', quantity: 10},
-      {code: 'f23a1f4g3', name: 'Gray Band', category: 'Fitness', quantity: 8},
+    this.activeSessions = [
+      {userName: 'adam', parkingPlaceId: 'Bamboo Watch', vehiclePlate: 'Accessories', status: 24},
+      {userName: 'adam nowak', parkingPlaceId: 'Black Watch', vehiclePlate: 'Accessories', status: 61},
+      {userName: 'xx21vz1fg', parkingPlaceId: 'Blue Band', vehiclePlate: 'Fitness', status: 2},
+      {userName: 'z32aa1f4g3', parkingPlaceId: 'Orange Band', vehiclePlate: 'Fitness', status: 5},
+      {userName: 'h23a1f4g3', parkingPlaceId: 'Pink Band', vehiclePlate: 'Fitness', status: 40},
+      {userName: 'v23a1f4g3', parkingPlaceId: 'Purple Band', vehiclePlate: 'Fitness', status: 12},
+      {userName: 'a23a1f4g3', parkingPlaceId: 'Red Band', vehiclePlate: 'Fitness', status: 24},
+      {userName: 'b23a1f4g3', parkingPlaceId: 'Yellow Band', vehiclePlate: 'Fitness', status: 18},
+      {userName: 'c23a1f4g3', parkingPlaceId: 'Green Band', vehiclePlate: 'Fitness', status: 30},
+      {userName: 'd23a1f4g3', parkingPlaceId: 'Black Band', vehiclePlate: 'Fitness', status: 15},
+      {userName: 'e23a1f4g3', parkingPlaceId: 'White Band', vehiclePlate: 'Fitness', status: 10},
+      {userName: 'f23a1f4g3', parkingPlaceId: 'Gray Band', vehiclePlate: 'Fitness', status: 8},
     ];
+    this.reservations = [
+      {userName: 'adam', parkingPlaceId: 'Bamboo Watch', vehiclePlate: 'Accessories', status: 'Reserved'},
+      {userName: 'adam nowak',parkingPlaceId: 'Black Watch', vehiclePlate: 'Accessories', status: 'Reserved'},
+    ]
+
+
     this.loading = false;
   }
 }

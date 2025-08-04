@@ -59,12 +59,15 @@
         </div>
     </div>
 
-    <div class="md:col-span-4 bg-white rounded-xl shadow-md p-6">
-        <p-table 
-        #dt2
-        [value]="products"
-        [(selection)]="selectedProducts"
-        dataKey="code"
+<!-- ======================================================== -->
+<!-- TABELA 1: Aktywne Sesje Parkowania                    -->
+<!-- ======================================================== -->
+<div class="md:col-span-4 bg-white rounded-xl shadow-md p-6">
+    <p-table 
+        #dt1
+        [value]="activeSessions"
+        [(selection)]="selectedSessions"
+        dataKey="userName"
         [rowHover]="true"
         [rows]="5"
         [showCurrentPageReport]="true"
@@ -72,75 +75,134 @@
         [rowsPerPageOptions]="[5, 10, 25, 50]"
         [loading]="loading"
         [paginator]="true"
-        [filterDelay]="0"
-        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
-        id="parking-table"
-        styleClass="parking-table"
-        >
-            <ng-template pTemplate="caption">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-xl font-bold">Lista miejsc</h2>
-                    <p-button icon="pi pi-refresh"></p-button>
-                </div>
-            </ng-template>
-        
-            <ng-template pTemplate="header">
-                <tr>
-                    <th></th>
-                    <th>Code</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Quantity</th>
-                </tr>
-                <tr>
-                    <th style="width: 4rem"><p-tableHeaderCheckbox /></th>
-                    <th>
-                        <p-columnFilter
-                        type="text"
-                        field="code"
-                        placeholder="Search by Code"
-                        ariaLabel="Filter Code"
-                        ></p-columnFilter>
-                    </th>
-                    <th>
-                        <p-columnFilter
-                        type="text"
-                        field="name"
-                        placeholder="Search by name"
-                        ariaLabel="Filter name"
-                        ></p-columnFilter>
-                    </th>
-                    <th>
-                        <p-columnFilter
-                        type="text"
-                        field="category"
-                        placeholder="Search by category"
-                        ariaLabel="Filter category"
-                        ></p-columnFilter>
-                    </th>
-                    <th>
-                        <p-columnFilter
-                        type="text"
-                        field="quantity"
-                        placeholder="Search by quantity"
-                        ariaLabel="Filter quantity"
-                        ></p-columnFilter>
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template #body let-product>
-                <tr>
-                    <td>
-                        <p-tableCheckbox [value]="product" />
-                    </td>
-                    <td>{{product.code}}</td>
-                    <td>{{product.name}}</td>
-                    <td>{{product.category}}</td>
-                    <td>{{product.quantity}}</td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </div>
+        [globalFilterFields]="['userName', 'parkingPlaceId', 'vehiclePlate', 'status']"
+        selectionMode="multiple"
+    >
+        <ng-template pTemplate="caption">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold">Aktywne Sesje Parkowania</h2>
+            </div>
+        </ng-template>
+    
+        <ng-template pTemplate="header">
+            <!-- Wiersz 1: Nazwy kolumn -->
+            <tr>
+                <th style="width: 4rem;"></th>
+                <th>User Name</th>
+                <th>Parking Place ID</th>
+                <th>Vehicle Plate</th>
+                <th>Status</th>
+            </tr>
+            <!-- Wiersz 2: Filtry -->
+            <tr>
+                <th><p-tableHeaderCheckbox /></th>
+                <th>
+                    <p-columnFilter type="text" field="userName"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="parkingPlaceId"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="vehiclePlate"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="status"></p-columnFilter>
+                </th>
+            </tr>
+        </ng-template>
 
+        <!-- POPRAWIONE CIAŁO TABELI -->
+        <ng-template pTemplate="body" let-session>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="session" />
+                </td>
+                <td>{{ session.userName }}</td>
+                <td>{{ session.parkingPlaceId }}</td>
+                <td>{{ session.vehiclePlate }}</td>
+                <td>
+                    <!-- Przykład stylizacji statusu -->
+                    <span class="px-2 py-1 rounded-full text-xs font-semibold"
+                          [ngClass]="{
+                            'bg-green-100 text-green-800': session.status === 'Active',
+                            'bg-yellow-100 text-yellow-800': session.status === 'Pending'
+                          }">
+                        {{ session.status }}
+                    </span>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+
+<!-- ======================================================== -->
+<!-- TABELA 2: Rezerwacje do Akceptacji                     -->
+<!-- ======================================================== -->
+<div class="md:col-span-4 bg-white rounded-xl shadow-md p-6 mt-8">
+    <p-table
+        #dt2
+        [value]="reservations"
+        [(selection)]="selectedReservations"
+        dataKey="userName"
+        [rows]="5"
+        [rowHover]="true"
+        [rowsPerPageOptions]="[5, 10, 25, 50]"
+        [paginator]="true"
+    >
+        <ng-template pTemplate="caption">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold">Rezerwacje do Akceptacji</h2>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <!-- Wiersz 1: Nazwy kolumn -->
+            <tr>
+                <th style="width: 4rem;"></th>
+                <th>User Name</th>
+                <th>Parking Place ID</th>
+                <th>Vehicle Plate</th>
+                <th>Status</th>
+            </tr>
+            <!-- Wiersz 2: Filtry -->
+            <tr>
+                <th><p-tableHeaderCheckbox /></th>
+                <th>
+                    <p-columnFilter type="text" field="userName"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="parkingPlaceId"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="vehiclePlate"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="status"></p-columnFilter>
+                </th>
+            </tr>
+        </ng-template>
+
+        <!-- POPRAWIONE CIAŁO TABELI -->
+        <ng-template pTemplate="body" let-reservation>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="reservation" />
+                </td>
+                <td>{{ reservation.userName }}</td>
+                <td>{{ reservation.parkingPlaceId }}</td>
+                <td>{{ reservation.vehiclePlate }}</td>
+                <td>
+                    <span class="px-2 py-1 rounded-full text-xs font-semibold bg-yellow-200 text-gray-900">
+                        {{ reservation.status }}
+                    </span>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+
+    
 </div>
 
