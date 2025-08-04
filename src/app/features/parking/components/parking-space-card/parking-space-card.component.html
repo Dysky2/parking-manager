@@ -1,12 +1,10 @@
-<!-- Główny kontener karty, reaguje na kliknięcie -->
-<!-- [ngClass] dynamicznie zmienia wygląd na podstawie statusu -->
 <div (click)="onCardClick()"
     class="card-container"
     [ngClass]="{
-       'available': space?.status === 'Available',
-       'occupied':  space?.status === 'Occupied',
-       'reserved':  space?.status === 'Reserved',
-       'maintenance': space?.status === 'Maintenance'
+       'available': space?.status == 'Available',
+       'occupied':  space?.status == 'Occupied',
+       'reserved':  space?.status == 'Reserved',
+       'maintenance': space?.status == 'Maintenance'
     }">
 
     <!-- Ikona na górze karty, zmienia się w zależności od statusu -->
@@ -20,13 +18,13 @@
     <!-- Główna treść karty -->
     <div class="content-container">
         <!-- Numer miejsca parkingowego -->
-        <div class="space-id">{{ space?.name }}</div>
+        <div class="space-id">{{ space?.parkingSpaceName }}</div>
         <!-- Status słowny -->
         <div class="status-text">{{ space?.status }}</div>
     </div>
 
     <!-- Numer rejestracyjny, widoczny tylko dla zajętych miejsc -->
-    <div class="plate-container" *ngIf="space?.status === 'Occupied' && space?.vehiclePlate">
+    <div class="plate-container" *ngIf="space?.status == 'Occupied' && space?.vehiclePlate">
         {{ space?.vehiclePlate }}
     </div>
 

@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
+import { UserService } from '../../core/services/user.service';
+import { tap } from 'rxjs';
+import { User } from '../../core/models/user.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,6 +21,8 @@ export class DashboardComponent implements OnInit {
 
   reservations!: any[];
   selectedReservations: {} | null = null;
+
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     this.activeSessions = [
@@ -38,6 +43,12 @@ export class DashboardComponent implements OnInit {
       {userName: 'adam', parkingPlaceId: 'Bamboo Watch', vehiclePlate: 'Accessories', status: 'Reserved'},
       {userName: 'adam nowak',parkingPlaceId: 'Black Watch', vehiclePlate: 'Accessories', status: 'Reserved'},
     ]
+
+    this.userService.getAllUsers().pipe(
+      tap(users => {
+        console.log(users[0]);
+      })
+    ).subscribe();
 
 
     this.loading = false;

@@ -1,4 +1,5 @@
 <div class="p-8">
+  <p-toast />
   <!-- Nagłówek -->
   <div class="flex justify-between items-center mb-6">
     <h1 class="text-2xl font-bold text-slate-800">Zarządzanie Parkingiem</h1>
@@ -19,7 +20,7 @@
         <app-parking-space-card
             *ngFor="let space of parkingSpaces"
             [space]="space"
+            (needToRefresh)="refreshPage($event)"
         ></app-parking-space-card>
-
     </div>
 </div>
