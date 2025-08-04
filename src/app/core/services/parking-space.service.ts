@@ -16,6 +16,10 @@ export class ParkingSpaceService {
     return this.http.get<ParkingSpace[]>(`${this.apiUrl}/all`);
   }
 
+  getAllParkingSpacesByStatus(status: string): Observable<ParkingSpace[]> {
+    return this.http.get<ParkingSpace[]>(`${this.apiUrl}/allByStatus`, { params: { status } });
+  }
+
   changeParkingSpaceStatus(spaceId: number, status: string, vehiclePlate?: string) {
     return this.http.post(`${this.apiUrl}/statusChange/${spaceId}`, {status, vehiclePlate});
   }

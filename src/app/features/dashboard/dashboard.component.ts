@@ -6,6 +6,8 @@ import { ButtonModule } from 'primeng/button';
 import { UserService } from '../../core/services/user.service';
 import { tap } from 'rxjs';
 import { User } from '../../core/models/user.model';
+import { ParkingSpace } from '../../core/models/parkingSpace.modal';
+import { ParkingSpaceService } from '../../core/services/parking-space.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,27 +24,18 @@ export class DashboardComponent implements OnInit {
   reservations!: any[];
   selectedReservations: {} | null = null;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService,
+              private parkingSpaceService: ParkingSpaceService) {}
 
   ngOnInit(): void {
-    this.activeSessions = [
-      {userName: 'adam', parkingPlaceId: 'Bamboo Watch', vehiclePlate: 'Accessories', status: 24},
-      {userName: 'adam nowak', parkingPlaceId: 'Black Watch', vehiclePlate: 'Accessories', status: 61},
-      {userName: 'xx21vz1fg', parkingPlaceId: 'Blue Band', vehiclePlate: 'Fitness', status: 2},
-      {userName: 'z32aa1f4g3', parkingPlaceId: 'Orange Band', vehiclePlate: 'Fitness', status: 5},
-      {userName: 'h23a1f4g3', parkingPlaceId: 'Pink Band', vehiclePlate: 'Fitness', status: 40},
-      {userName: 'v23a1f4g3', parkingPlaceId: 'Purple Band', vehiclePlate: 'Fitness', status: 12},
-      {userName: 'a23a1f4g3', parkingPlaceId: 'Red Band', vehiclePlate: 'Fitness', status: 24},
-      {userName: 'b23a1f4g3', parkingPlaceId: 'Yellow Band', vehiclePlate: 'Fitness', status: 18},
-      {userName: 'c23a1f4g3', parkingPlaceId: 'Green Band', vehiclePlate: 'Fitness', status: 30},
-      {userName: 'd23a1f4g3', parkingPlaceId: 'Black Band', vehiclePlate: 'Fitness', status: 15},
-      {userName: 'e23a1f4g3', parkingPlaceId: 'White Band', vehiclePlate: 'Fitness', status: 10},
-      {userName: 'f23a1f4g3', parkingPlaceId: 'Gray Band', vehiclePlate: 'Fitness', status: 8},
-    ];
-    this.reservations = [
-      {userName: 'adam', parkingPlaceId: 'Bamboo Watch', vehiclePlate: 'Accessories', status: 'Reserved'},
-      {userName: 'adam nowak',parkingPlaceId: 'Black Watch', vehiclePlate: 'Accessories', status: 'Reserved'},
-    ]
+    this.parkingSpaceService.getAllParkingSpaces().subscribe((parkingSpaces) => {
+        console.log(parkingSpaces);
+        this.activeSessions = parkingSpaces;
+    })
+
+    this.parkingSpaceService.getAllParkingSpacesByStatus("Reserved").subscribe((parkingSpaces) => {
+      this.reservations = parkingSpaces;
+    });
 
     this.userService.getAllUsers().pipe(
       tap(users => {

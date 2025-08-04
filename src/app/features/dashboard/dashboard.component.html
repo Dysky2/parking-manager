@@ -67,7 +67,7 @@
         #dt1
         [value]="activeSessions"
         [(selection)]="selectedSessions"
-        dataKey="userName"
+        dataKey="userEmail"
         [rowHover]="true"
         [rows]="5"
         [showCurrentPageReport]="true"
@@ -75,7 +75,7 @@
         [rowsPerPageOptions]="[5, 10, 25, 50]"
         [loading]="loading"
         [paginator]="true"
-        [globalFilterFields]="['userName', 'parkingPlaceId', 'vehiclePlate', 'status']"
+        [globalFilterFields]="['userEmail', 'parkingSpaceName', 'vehiclePlate', 'status']"
         selectionMode="multiple"
     >
         <ng-template pTemplate="caption">
@@ -97,10 +97,10 @@
             <tr>
                 <th><p-tableHeaderCheckbox /></th>
                 <th>
-                    <p-columnFilter type="text" field="userName"></p-columnFilter>
+                    <p-columnFilter type="text" field="userEmail"></p-columnFilter>
                 </th>
                 <th>
-                    <p-columnFilter type="text" field="parkingPlaceId"></p-columnFilter>
+                    <p-columnFilter type="text" field="parkingSpaceName"></p-columnFilter>
                 </th>
                 <th>
                     <p-columnFilter type="text" field="vehiclePlate"></p-columnFilter>
@@ -117,15 +117,17 @@
                 <td>
                     <p-tableCheckbox [value]="session" />
                 </td>
-                <td>{{ session.userName }}</td>
-                <td>{{ session.parkingPlaceId }}</td>
+                <td>{{ session.userEmail }}</td>
+                <td>{{ session.parkingSpaceName }}</td>
                 <td>{{ session.vehiclePlate }}</td>
                 <td>
                     <!-- Przykład stylizacji statusu -->
                     <span class="px-2 py-1 rounded-full text-xs font-semibold"
                           [ngClass]="{
-                            'bg-green-100 text-green-800': session.status === 'Active',
-                            'bg-yellow-100 text-yellow-800': session.status === 'Pending'
+                            'bg-green-100 text-green-800': session.status === 'Available',
+                            'bg-yellow-100 text-yellow-800': session.status === 'Reserved',
+                            'bg-red-100 text-red-800': session.status === 'Occupied',
+                            'bg-slate-200 text-slate-600': session.status === 'Maintenance'
                           }">
                         {{ session.status }}
                     </span>
