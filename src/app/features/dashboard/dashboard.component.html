@@ -1,12 +1,11 @@
-<p-toast />
-<p-confirmdialog />
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 bg-white">
     <div class="bg-white rounded-xl shadow-md p-6 ">
+
         <div class="flex items-center justify-between">
             <div>
                 <p class="text-sm font-medium text-slate-500">Total Spots</p>
                 <div class="flex items-baseline mt-1 space-x-2">
-                    <p class="text-xl font-bold text-slate-800">100</p>
+                    <p class="text-xl font-bold text-slate-800">{{ numberOfAllParkingSpaces }}</p>
                     <!-- <span class="text-sm font-bold text-green-500">+55%</span> -->
                 </div>
             </div>
@@ -21,7 +20,7 @@
             <div>
                 <p class="text-sm font-medium text-slate-500">Active Spots</p>
                 <div class="flex items-baseline mt-1 space-x-2">
-                    <p class="text-xl font-bold text-slate-800">43</p>
+                    <p class="text-xl font-bold text-slate-800"> {{ numberOfAvailableParkingSpaces }}</p>
                     <!-- <span class="text-sm font-bold text-green-500">+55%</span> -->
                 </div>
             </div>
@@ -36,7 +35,7 @@
             <div>
                 <p class="text-sm font-medium text-slate-500">Occupied</p>
                 <div class="flex items-baseline mt-1 space-x-2">
-                    <p class="text-xl font-bold text-slate-800">100</p>
+                    <p class="text-xl font-bold text-slate-800">{{ numberOfOccupiedParkingSpaces }}</p>
                     <!-- <span class="text-sm font-bold text-green-500">+55%</span> -->
                 </div>
             </div>
@@ -51,7 +50,7 @@
             <div>
                 <p class="text-sm font-medium text-slate-500">Occupancy Rate</p>
                 <div class="flex items-baseline mt-1 space-x-2">
-                    <p class="text-xl font-bold text-slate-800">44%</p>
+                    <p class="text-xl font-bold text-slate-800">{{percentOfOccupiedPlaces}}%</p>
                     <!-- <span class="text-sm font-bold text-green-500">+55%</span> -->
                 </div>
             </div>
@@ -60,7 +59,6 @@
             </div>
         </div>
     </div>
-
 <!-- ======================================================== -->
 <!-- TABELA 1: Aktywne Sesje Parkowania                    -->
 <!-- ======================================================== -->
@@ -108,7 +106,21 @@
                     <p-columnFilter type="text" field="vehiclePlate"></p-columnFilter>
                 </th>
                 <th>
-                    <p-columnFilter type="text" field="status"></p-columnFilter>
+                    <p-columnFilter field="status" matchMode="equals" [showMenu]="false">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-select 
+                                [options]="statuses"
+                                placeholder="Select One"
+                                class="md:w-48"
+                                (onChange)="filter($event.value)"
+                                [showClear]="true"
+                            >
+                                <ng-template let-option pTemplate="item">
+                                    <p-tag [value]="option.value" [severity]="getSeverity(option.value)" />
+                                </ng-template>
+                            </p-select>
+                        </ng-template>
+                    </p-columnFilter>
                 </th>
             </tr>
         </ng-template>
@@ -123,8 +135,9 @@
                 <td>{{ session.parkingSpaceName }}</td>
                 <td>{{ session.vehiclePlate }}</td>
                 <td>
+                    <p-tag [value]="session.status" [severity]="getSeverity(session.status)" />
                     <!-- Przykład stylizacji statusu -->
-                    <span class="px-2 py-1 rounded-full text-xs font-semibold"
+                    <!-- <span class="px-2 py-1 rounded-full text-xs font-semibold"
                           [ngClass]="{
                             'bg-green-100 text-green-800': session.status === 'Available',
                             'bg-yellow-100 text-yellow-800': session.status === 'Reserved',
@@ -132,7 +145,7 @@
                             'bg-slate-200 text-slate-600': session.status === 'Maintenance'
                           }">
                         {{ session.status }}
-                    </span>
+                    </span> -->
                 </td>
             </tr>
         </ng-template>

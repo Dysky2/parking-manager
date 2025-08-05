@@ -7,25 +7,30 @@ import { UserService } from '../../core/services/user.service';
 import { ParkingSpace } from '../../core/models/parkingSpace.modal';
 import { ParkingSpaceService } from '../../core/services/parking-space.service';
 import { ConfirmationService, MessageService  } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
-import { ConfirmDialog } from 'primeng/confirmdialog'
-
+import { SelectModule } from 'primeng/select';
+import { TagModule } from 'primeng/tag';
+import { FormsModule } from '@angular/forms'; 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [MatIconModule , TableModule, ButtonModule, CommonModule, ConfirmDialog, ToastModule],
+  imports: [CommonModule, MatIconModule , TableModule, ButtonModule, SelectModule, TagModule, FormsModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
-  providers: [ConfirmationService, MessageService]
 })
+
 export class DashboardComponent implements OnInit {
   activeSessions!: any[];
   selectedSessions: any[] | {} | null = null;
   loading: boolean = true;
 
-  first: number = 0;
+  numberOfAllParkingSpaces: number = 0;
+  numberOfAvailableParkingSpaces: number = 0;
+  numberOfOccupiedParkingSpaces: number = 0;
+  percentOfOccupiedPlaces: number = 0; 
 
+  first: number = 0;
+  statuses!: any[];
   reservations!: ParkingSpace[];
   selectedReservations: {} | null = null;
 
@@ -45,9 +50,45 @@ export class DashboardComponent implements OnInit {
         this.activeSessions = parkingSpaces;
     })
 
+    this.parkingSpaceService.getNumberOfParkingSpaces().subscribe((countsOfParkingSpaces) => {
+      this.numberOfAllParkingSpaces = countsOfParkingSpaces;
+    })
+
+    this.parkingSpaceService.getNumberOfParkingSpacesByStatus("Available").subscribe((countsOfParkingSpaces) => {
+      this.numberOfAvailableParkingSpaces = countsOfParkingSpaces;
+    })
+
+    this.parkingSpaceService.getNumberOfParkingSpacesByStatus("Occupied").subscribe((countsOfParkingSpaces) => {
+      this.numberOfOccupiedParkingSpaces = countsOfParkingSpaces;
+
+      if(this.numberOfAllParkingSpaces > 0) {
+        this.percentOfOccupiedPlaces = (this.numberOfOccupiedParkingSpaces / this.numberOfAllParkingSpaces) * 100;
+      } else {
+        this.percentOfOccupiedPlaces = 0;
+      }
+    })
+
+
     this.fetchParkingSpacesReservationsTable();
 
     this.loading = false;
+
+    this.statuses = [
+      { label: 'Available', value: 'Available' },
+      { label: 'Occupied', value: 'Occupied' },
+      { label: 'Reserved', value: 'Reserved' },
+      { label: 'Maintenance', value: 'Maintenance' }
+    ]
+  }
+
+  getSeverity(status: string) {
+    switch (status) {
+      case 'Occupied': return 'danger';
+      case 'Available': return 'success';
+      case 'Reserved': return 'warn';
+      case 'Maintenance': return 'info';
+      default: return 'info';
+    }
   }
 
   acceptReservation(parkingSpaceId: string) {

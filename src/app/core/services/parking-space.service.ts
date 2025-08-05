@@ -24,4 +24,12 @@ export class ParkingSpaceService {
     return this.http.post(`${this.apiUrl}/statusChange/${spaceId}`, {status, vehiclePlate, userEmail, createdDataTime});
   }
 
+  getNumberOfParkingSpaces(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/countAll`);
+  }
+
+  getNumberOfParkingSpacesByStatus(status: string): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/countByStatus`, {params: { status } });
+  }
+
 }
