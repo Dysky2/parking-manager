@@ -81,6 +81,8 @@
         </ng-template>
 
         <ng-template [ngSwitchCase]="'Occupied'">
+            <p-toast />
+            <p-confirmdialog />
             <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 m-4">
 
                 <!-- NAGŁÓWEK -->
@@ -98,12 +100,13 @@
                 <!-- Informacje o parkowaniu -->
                 <div class="space-y-4 text-slate-700">
                     <p><strong>Numer Rejestracyjny:</strong> {{ data.space.vehiclePlate }}</p>
-                    <p><strong>Czas Wjazdu:</strong></p>
+                    <p><strong>Czas Wjazdu: </strong>{{ data.space.createdDataTime | date: 'HH:mm dd.MM.yyyy' }}</p>
                     <!-- Można dodać inne informacje -->
                 </div>
                 <!-- Przyciski -->
                 <div class="flex justify-end items-center pt-8">
-                    <button 
+                    <button
+                        (click)="endParkingSpace()"
                         type="button"
                         class="flex items-center justify-center bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors duration-200">
                         <mat-icon class="mr-2">cancel</mat-icon>

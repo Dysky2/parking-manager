@@ -4,4 +4,5 @@ export interface ParkingSpace {
     userEmail: string;
     vehiclePlate: string;
     status: 'Available' | 'Occupied' | 'Reserved' | 'Maintenance';
+    createdDataTime?: Date;
 }

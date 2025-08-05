@@ -20,8 +20,8 @@ export class ParkingSpaceService {
     return this.http.get<ParkingSpace[]>(`${this.apiUrl}/allByStatus`, { params: { status } });
   }
 
-  changeParkingSpaceStatus(spaceId: string, status: string, vehiclePlate?: string, userEmail?: string) {
-    return this.http.post(`${this.apiUrl}/statusChange/${spaceId}`, {status, vehiclePlate, userEmail});
+  changeParkingSpaceStatus(spaceId: string, status: string, vehiclePlate?: string, userEmail?: string, createdDataTime?: String) {
+    return this.http.post(`${this.apiUrl}/statusChange/${spaceId}`, {status, vehiclePlate, userEmail, createdDataTime});
   }
 
 }

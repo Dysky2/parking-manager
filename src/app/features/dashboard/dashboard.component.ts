@@ -4,7 +4,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { UserService } from '../../core/services/user.service';
-import { tap } from 'rxjs';
 import { ParkingSpace } from '../../core/models/parkingSpace.modal';
 import { ParkingSpaceService } from '../../core/services/parking-space.service';
 import { ConfirmationService, MessageService  } from 'primeng/api';
@@ -43,17 +42,10 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.parkingSpaceService.getAllParkingSpaces().subscribe((parkingSpaces) => {
-        console.log(parkingSpaces);
         this.activeSessions = parkingSpaces;
     })
 
     this.fetchParkingSpacesReservationsTable();
-
-    this.userService.getAllUsers().pipe(
-      tap(users => {
-        console.log(users[0]);
-      })
-    ).subscribe();
 
     this.loading = false;
   }
@@ -62,7 +54,6 @@ export class DashboardComponent implements OnInit {
     this.confirmationService.confirm({
         message: 'Are you sure you want to confirm the selected reservation?',
         header: 'Confirm',
-        icon: 'pi pi-exclamation-triangle',
         accept: () => {
             this.parkingSpaceService.changeParkingSpaceStatus(parkingSpaceId, "Occupied").subscribe( () => {
                 this.fetchParkingSpacesReservationsTable();

@@ -29,7 +29,7 @@ export class ParkingComponent implements OnInit {
   refreshPage(event: boolean) {
     if(event) {
       this.fetchParkingSpaces();
-      this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Parking space reserved successfully"t', life: 2000 });
+      this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Parking space reserved successfully', life: 2000 });
     }
   }
   

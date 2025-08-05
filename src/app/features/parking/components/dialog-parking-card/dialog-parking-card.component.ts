@@ -14,6 +14,9 @@ import { User } from '../../../../core/models/user.model';
 import { UserService } from '../../../../core/services/user.service';
 import { ParkingSpaceService } from '../../../../core/services/parking-space.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmationService, MessageService  } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialog } from 'primeng/confirmdialog'
 
 @Component({
   selector: 'app-dialog-parking-card',
@@ -27,10 +30,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     FormsModule, 
     AngularMaterialModule,
     ReactiveFormsModule,
-    SelectModule
+    SelectModule,
+    ToastModule,
+    ConfirmDialog
   ],
   templateUrl: './dialog-parking-card.component.html',
-  styleUrl: './dialog-parking-card.component.scss'
+  styleUrl: './dialog-parking-card.component.scss',
+    providers: [ConfirmationService, MessageService]
 })
 
 export class DialogParkingCardComponent implements OnInit {
@@ -45,6 +51,8 @@ export class DialogParkingCardComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private userService: UserService,
               private _snackBar: MatSnackBar,
+              private confirmationService: ConfirmationService,
+              private messageService: MessageService,
               private parkingSpaceService: ParkingSpaceService) {}
 
   ngOnInit(): void {
@@ -60,7 +68,6 @@ export class DialogParkingCardComponent implements OnInit {
     this.userService.getAllUsers().subscribe(users => {
       this.users = users;
     })
-
   }
 
   dialogClose() {
@@ -69,13 +76,30 @@ export class DialogParkingCardComponent implements OnInit {
 
   dialogSubmit() {
     if(this.form.valid) {
-      this.parkingSpaceService.changeParkingSpaceStatus(this.data.space.parkingSpaceId, "Reserved", this.form.value.vehiclePlate, this.form.value.user.email).subscribe(() => {
+      const currentDate = new Date();
+      this.parkingSpaceService.changeParkingSpaceStatus(this.data.space.parkingSpaceId, 
+                                                        "Reserved",
+                                                         this.form.value.vehiclePlate, 
+                                                         this.form.value.user.email, 
+                                                         currentDate.toISOString()).subscribe(() => {
         this._snackBar.open("Parking space reserved successfully", "Close",  {
           duration: 3000
         })
         this.dialogRef.close(true);
       });
     }
+  }
+
+  endParkingSpace() {
+    this.confirmationService.confirm({
+      message: "Are you sure you want to delete release this parking space",
+      header: "Confirm",
+      accept: () => {
+          this.parkingSpaceService.changeParkingSpaceStatus(this.data.space.parkingSpaceId, "Available").subscribe(() => {
+            this.dialogRef.close(true);
+          })
+      }
+    })
   }
 
 }
