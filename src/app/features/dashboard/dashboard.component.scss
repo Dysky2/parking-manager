@@ -97,13 +97,13 @@ $table-text-color: #111827;
         border-bottom: 1px solid #f1f5f9;
 
         // Efekt po najechaniu myszką
-        &:hover {
-            background: #6d6d6d !important;
-        }
+        // &:hover {
+        //     background: #6d6d6d !important;
+        // }
     }
     .p-datatable .p-datatable-tbody > tr > td {
         border: none;
-        padding: 1.25rem; // Zwiększony padding dla większej "przewiewności"
+        padding: 1.25rem; 
     }
 
     // --- PAGINATOR (STOPKA) - POPRAWIONA WERSJA ---
@@ -122,8 +122,6 @@ $table-text-color: #111827;
 
         // Przyciski stron i nawigacji
         .p-paginator-page, .p-paginator-next, .p-paginator-prev, .p-paginator-first, .p-paginator-last {
-            background: white;
-            color: $table-text-color;
             border-radius: 6px;
             min-width: 2.5rem;
             height: 2.5rem;
@@ -135,9 +133,49 @@ $table-text-color: #111827;
         }
 
         // Aktywna strona - POPRAWIONY KOLOR
-        .p-paginator-page.p-highlight {
-            background: #ffffff; // Fioletowy kolor, pasujący do Sidenava
-            color: rgb(0, 0, 0);
+        .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+            background: #ff0000 !important; // Czerwony
+            color: rgb(0, 0, 0) !important;   // Czarny tekst
+
+            // Dodatkowo, aby zapobiec zmianie koloru po najechaniu na aktywny przycisk
+            &:hover {
+                background: #ff0000 !important; // Pozostaje czerwony
+            }
         }
     }
+
+    .action-button-circle.p-button {
+        width: 2.5rem !important;      
+        height: 2.5rem !important;    
+
+        border-radius: 50% !important;
+
+        .p-button-icon {
+            font-size: 1.25rem;
+            margin: auto;      
+        }
+    }
+    
+    .action-button-circle.p-button-outlined {
+        background-color: transparent !important; 
+        
+        &.p-button-success .p-button-icon {
+            color: var(--p-green-500);
+        }
+        &.p-button-danger .p-button-icon {
+            color: var(--p-red-500);
+        }
+
+        &:hover {
+            &.p-button-success {
+                background-color: var(--p-green-500) !important;
+                .p-button-icon { color: white !important; }
+            }
+             &.p-button-danger {
+                background-color: var(--p-red-500) !important;
+                .p-button-icon { color: white !important; }
+            }
+        }
+    }
+
 }

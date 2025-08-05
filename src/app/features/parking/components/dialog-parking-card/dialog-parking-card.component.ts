@@ -69,7 +69,7 @@ export class DialogParkingCardComponent implements OnInit {
 
   dialogSubmit() {
     if(this.form.valid) {
-      this.parkingSpaceService.changeParkingSpaceStatus(this.data.space.parkingSpaceId, "Reserved", this.form.value.vehiclePlate).subscribe(() => {
+      this.parkingSpaceService.changeParkingSpaceStatus(this.data.space.parkingSpaceId, "Reserved", this.form.value.vehiclePlate, this.form.value.user.email).subscribe(() => {
         this._snackBar.open("Parking space reserved successfully", "Close",  {
           duration: 3000
         })
