@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ParkingSpace } from '../models/parkingSpace.modal';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ParkingSpaceService {
 
-    private apiUrl = "http://localhost:8080/api/parking";
+  private apiUrl = "http://localhost:8080/api/parking";
 
   constructor(private http: HttpClient) { }
 
@@ -30,6 +31,11 @@ export class ParkingSpaceService {
 
   getNumberOfParkingSpacesByStatus(status: string): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/countByStatus`, {params: { status } });
+  }
+
+  addParkingSpace(parkingSpaceName: string) {
+    const params = new HttpParams().set('parkingNameSpace', parkingSpaceName);
+    return this.http.post(`${this.apiUrl}/addParkingSpace`, null, {params: params})
   }
 
 }
