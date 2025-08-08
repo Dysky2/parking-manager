@@ -1,1 +1,141 @@
-<p>user works!</p>
+<div class="p-8">
+
+  <div class="bg-white rounded-xl shadow-md">
+
+    <p-table
+        #dt
+        [value]="users"
+        [(selection)]="selectedUsers"
+        dataKey="userId"
+        [rows]="10"
+        [paginator]="true"
+        [globalFilterFields]="['name', 'surname', 'email', 'role']"
+        [rowHover]="true"
+        editMode="row"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true"
+        selectionMode="multiple">
+
+        <ng-template pTemplate="caption">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 p-4">
+                <div class="flex items-center gap-2">
+
+                    <div *ngIf="!isAdminLogged; else adminLogged">
+                      <ng-container *ngTemplateOutlet="userLogged"></ng-container>
+                    </div>
+
+                    <ng-template #userLogged>
+                      <p-button label="Add User" [pTooltip]="'Admin is not logged'" icon="pi pi-user-plus" severity="success" [disabled]="!isAdminLogged"></p-button>
+                    </ng-template>
+
+                    <ng-template #adminLogged>
+                      <p-button label="Add User" icon="pi pi-user-plus" severity="success" (click)="addUser()"></p-button>
+                    </ng-template>
+
+                    <p-button
+                        label="Actions"
+                        icon="pi pi-cog"
+                        [disabled]="!selectedUsers || !selectedUsers.length"
+                        (click)="bulkActionsMenu.toggle($event)">
+                    </p-button>
+
+                    <!-- Menu dla masowych akcji -->
+                    <p-menu #bulkActionsMenu [model]="bulkActionItems" [popup]="true" appendTo="body"></p-menu>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 4rem;">
+                    <p-tableHeaderCheckbox />
+                </th>
+                <th pSortableColumn="name">User Name <p-sortIcon field="name" /></th>
+                <th pSortableColumn="surname">User surname <p-sortIcon field="surname" /></th>
+                <th pSortableColumn="email">Email <p-sortIcon field="email" /></th>
+                <th pSortableColumn="role">Role <p-sortIcon field="role" /></th>
+                <th style="width: 8rem;">Actions</th>
+            </tr>
+        </ng-template>
+
+        <!-- Ciało tabeli -->
+        <ng-template pTemplate="body" let-user let-editing="editing"  let-i="rowIndex">
+            <tr [pEditableRow]="user">
+                <td>
+                    <p-tableCheckbox [value]="user" />
+                </td>
+                <td>
+                  <p-cellEditor>
+                    <ng-template pTemplate="input">
+                      <input pInputText class="p-2" type="text" [(ngModel)]="user.name" required>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{user.name}}
+                    </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                      <ng-template pTemplate="input">
+                        <input pInputText class="p-2" type="text" [(ngModel)]="user.surname" required>
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                        {{user.surname}}
+                      </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                      <ng-template pTemplate="input">
+                        <input pInputText class="p-2" type="text" [(ngModel)]="user.email" required>
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                        {{user.email}}
+                      </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                      <ng-template pTemplate="input">
+                        <p-select [options]="roles" appendTo="body" [(ngModel)]="user.role" required></p-select>
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                        <p-tag [value]="user.role" [severity]="user.role === 'Admin' ? 'warn' : 'secondary'" />
+                      </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td class="text-center">
+                    <div class="flex justify-center gap-2">
+                        <p-button [disabled]="!isAdminLogged" [pTooltip]="isAdminLogged ? 'Edit' : 'Admin is not logged'" *ngIf="!editing" pInitEditableRow icon="pi pi-pencil" styleClass="action-button-circle p-button-rounded p-button-outlined p-button-text p-button-info"></p-button>
+                        <p-button (click)="deleteUser(user)" [disabled]="!isAdminLogged" [pTooltip]="isAdminLogged ? 'Delete' : 'Admin is not logged'" *ngIf="!editing" icon="pi pi-trash" styleClass="action-button-circle p-button-rounded p-button-outlined p-button-text p-button-danger"></p-button>
+
+                        <p-button
+                          (click)="onRowEditSave(user)"
+                          *ngIf="editing" pSaveEditableRow
+                          icon="pi pi-check"
+                          styleClass="action-button-circle p-button-rounded p-button-outlined p-button-text p-button-info"
+                          pTooltip="Save">
+                        </p-button>
+                        <p-button
+                          *ngIf="editing"
+                          pCancelEditableRow
+                          icon="pi pi-times"
+                          styleClass="action-button-circle p-button-rounded p-button-outlined p-button-text p-button-danger"
+                          pTooltip="Cancel">
+                        </p-button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="6" class="text-center p-8">
+                    <p class="text-slate-500">No users found.</p>
+                </td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+  </div>
+</div>

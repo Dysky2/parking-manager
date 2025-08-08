@@ -1,0 +1,35 @@
+:host ::ng-deep {
+
+    .p-checkbox .p-checkbox-box{
+        border: 1px solid #cbd5e1;
+    }
+
+    .action-button-circle.p-button-outlined {
+        background-color: transparent !important; 
+        
+        &.p-button-success .p-button-icon {
+            color: var(--p-green-500);
+        }
+        &.p-button-info .p-button-icon {
+            color: var(--p-blue-500);
+        }
+        &.p-button-danger .p-button-icon {
+            color: var(--p-red-500);
+        }
+
+        &:hover {
+            &.p-button-success {
+                background-color: var(--p-green-500) !important;
+                .p-button-icon { color: white !important; }
+            }
+            &.p-button-info {
+                background-color: var(--p-blue-300) !important;
+                .p-button-icon { color: white !important; }
+            }
+             &.p-button-danger {
+                background-color: var(--p-red-500) !important;
+                .p-button-icon { color: white !important; }
+            }
+        }
+    }
+}

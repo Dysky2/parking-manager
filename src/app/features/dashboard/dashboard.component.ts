@@ -62,7 +62,7 @@ export class DashboardComponent implements OnInit {
       this.numberOfOccupiedParkingSpaces = countsOfParkingSpaces;
 
       if(this.numberOfAllParkingSpaces > 0) {
-        this.percentOfOccupiedPlaces = (this.numberOfOccupiedParkingSpaces / this.numberOfAllParkingSpaces) * 100;
+        this.percentOfOccupiedPlaces = Math.round((this.numberOfOccupiedParkingSpaces / this.numberOfAllParkingSpaces) * 100);
       } else {
         this.percentOfOccupiedPlaces = 0;
       }

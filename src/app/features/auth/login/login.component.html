@@ -4,7 +4,7 @@
             <mat-icon aria-hidden="false" fontIcon="arrow_back" class="logo"></mat-icon>
             <div class="go_back">Go back</div>
         </a>
-        <form class="my-form" [formGroup]="form">
+        <form class="my-form" [formGroup]="form" (ngSubmit)="logIn()">
             <div class="form-welcome-row">
                 <h1>Welcome back! 👏</h1>
                 <h2>Login with your account!</h2>

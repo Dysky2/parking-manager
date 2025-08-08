@@ -1,0 +1,60 @@
+<div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg m-4">
+
+    <div class="flex justify-between items-center p-6 border-b border-slate-200">
+      <h2 class="text-2xl font-bold text-slate-800">
+        <mat-icon class="align-middle mr-2">person_add</mat-icon>
+        Create New User Account
+      </h2>
+      <button (click)="closeDialog()" class="text-slate-400 hover:text-slate-600 transition-colors">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <form class="p-8" [formGroup]="form" (ngSubmit)="createUser()">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8">
+
+        <div class="md:col-span-1">
+          <p-floatlabel>
+            <input formControlName="name" pInputText id="name" class="w-full bg-white border focus:outline-none p-2 rounded" />
+            <label for="name">First Name</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="md:col-span-1">
+          <p-floatlabel>
+            <input formControlName="surname" pInputText id="surname" class="w-full bg-white border focus:outline-none p-2 rounded" />
+            <label for="surname">Last Name</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="md:col-span-2">
+          <p-floatlabel>
+            <input formControlName="email" pInputText id="email" name="email" type="email" class="w-full bg-white border focus:outline-none p-2 rounded" />
+            <label for="email">Email Address</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="md:col-span-2">
+          <p-floatlabel>
+            <p-password formControlName="password" inputId="password" [toggleMask]="true" styleClass="w-full border focus:outline-none p-2 rounded" inputStyleClass="w-full" [feedback]="false"></p-password>
+            <label for="password">Password</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="md:col-span-2">
+          <label class="font-semibold text-slate-700 block mb-2">Role</label>
+          <p-select formControlName="role" [options]="roles" [showClear]="true" [checkmark]="true" optionLabel="name" placeholder="Select a Role" styleClass="w-full  border focus:outline-none p-2"></p-select>
+        </div>
+
+      </div>
+
+      <div class="flex justify-end items-center pt-8 mt-8 border-t border-slate-200 space-x-4">
+        <p-button label="Cancel" (click)="closeDialog()" [text]="true" styleClass="p-button-secondary"></p-button>
+        <p-button label="Create User" type="submit" icon="pi pi-check" [disabled]="!form.valid"></p-button>
+      </div>
+
+    </form>
+  </div>
+</div>

@@ -23,11 +23,51 @@
         <mat-icon class="text-xl">settings</mat-icon>
       </a>
       
-      <a href="/login" class="flex items-center text-gray-600 hover:text-gray-900">
+      <!-- <a href="/login" class="flex items-center text-gray-600 hover:text-gray-900">
         <mat-icon>person</mat-icon>
         <span class="ml-2 text-sm font-semibold" >{{ userName }}</span>
-      </a>
+      </a> -->
 
+
+      <div *ngIf="$authStateChecked | async">
+
+        <div *ngIf="$currentUser | async as currentUser; else loginButton">
+          <ng-container *ngTemplateOutlet="userProfile context: {user: currentUser}" ></ng-container>
+        </div>
+
+        <ng-template #userProfile let-user="user">
+          <p-button 
+              (click)="menu.toggle($event)" 
+              styleClass="p-button-text p-button-plain"
+              #userMenuBtn>
+              <!-- Zawartość przycisku (awatar i nazwa) -->
+              <div class="flex items-center text-slate-700">
+                  <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center mr-3">
+                      <mat-icon class="text-slate-500">person</mat-icon>
+                  </div>
+                  <span class="text-sm font-semibold">
+                      {{ user.name }} {{ user.surname }}
+                  </span>
+              </div>
+          </p-button>
+
+          <p-menu 
+              #menu 
+              [model]="userMenuItems" 
+              [popup]="true"
+              appendTo="body">
+          </p-menu>
+        </ng-template>
+
+
+        <!-- Szablon 2: Widok dla UŻYTKOWNIKA NIEZALOGOWANEGO -->
+        <ng-template #loginButton>
+            <a routerLink="/login" class="flex items-center text-slate-600 hover:text-slate-900">
+                <mat-icon class="text-xl">person</mat-icon>
+                <span class="ml-2 text-sm font-semibold">Zaloguj się</span>
+            </a>
+        </ng-template>
+      </div>
     </div>
   </div>
 </nav>

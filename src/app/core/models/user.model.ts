@@ -1,7 +1,9 @@
 export interface User {
-    id: string;
+    userId: string;
     name: string;
     surname: string;
     email: string;
     password: string;
+    createdDataTime: Date;
+    role: "Admin" | "User"
 }

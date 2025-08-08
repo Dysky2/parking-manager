@@ -4,7 +4,7 @@
             <mat-icon aria-hidden="false" fontIcon="arrow_back" class="logo"></mat-icon>
             <div class="go_back">Go back</div>
         </a>
-        <form class="my-form" [formGroup]="form">
+        <form class="my-form" [formGroup]="form" (ngSubmit)="createUser()">
             <div class="form-welcome-row">
                 <h1>Register to Orion</h1>
             </div>
@@ -15,9 +15,9 @@
                     <div class="error-message">Name is incorrect</div>
                 </div>
                 <div class="text-field">
-                    <label for="username">Username</label>
-                    <input type="text" name="username" id="username" formControlName="username" placeholder="Enter your name" required>
-                    <div class="error-message">Username is incorrect</div>
+                    <label for="surname">Surname</label>
+                    <input type="text" name="surname" id="surname" formControlName="surname" placeholder="Enter your surname" required>
+                    <div class="error-message">Surname is incorrect</div>
                 </div>
             </div>
 
