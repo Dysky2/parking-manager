@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="bg-white rounded-xl shadow-md p-6 ">
         <div class="flex items-center justify-between">
             <div>
@@ -59,11 +59,9 @@
             </div>
         </div>
     </div>
-<!-- ======================================================== -->
-<!-- TABELA 1: Aktywne Sesje Parkowania                    -->
-<!-- ======================================================== -->
+
 <div class="md:col-span-4 bg-white rounded-xl shadow-md p-6">
-    <p-table 
+    <p-table
         #dt1
         [value]="activeSessions"
         [(selection)]="selectedSessions"
@@ -83,7 +81,7 @@
                 <h2 class="text-xl font-bold">Aktywne Sesje Parkowania</h2>
             </div>
         </ng-template>
-    
+
         <ng-template pTemplate="header">
             <!-- Wiersz 1: Nazwy kolumn -->
             <tr>
@@ -108,7 +106,7 @@
                 <th>
                     <p-columnFilter field="status" matchMode="equals" [showMenu]="false">
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-select 
+                            <p-select
                                 [options]="statuses"
                                 placeholder="Select One"
                                 class="md:w-48"
@@ -136,26 +134,12 @@
                 <td>{{ session.vehiclePlate }}</td>
                 <td>
                     <p-tag [value]="session.status" [severity]="getSeverity(session.status)" />
-                    <!-- Przykład stylizacji statusu -->
-                    <!-- <span class="px-2 py-1 rounded-full text-xs font-semibold"
-                          [ngClass]="{
-                            'bg-green-100 text-green-800': session.status === 'Available',
-                            'bg-yellow-100 text-yellow-800': session.status === 'Reserved',
-                            'bg-red-100 text-red-800': session.status === 'Occupied',
-                            'bg-slate-200 text-slate-600': session.status === 'Maintenance'
-                          }">
-                        {{ session.status }}
-                    </span> -->
                 </td>
             </tr>
         </ng-template>
     </p-table>
 </div>
 
-
-<!-- ======================================================== -->
-<!-- TABELA 2: Rezerwacje do Akceptacji                     -->
-<!-- ======================================================== -->
     <div class="md:col-span-4 bg-white rounded-xl shadow-md p-6 mt-8">
         <p-table
             #dt2
@@ -174,15 +158,13 @@
             </ng-template>
 
             <ng-template pTemplate="header">
-                <!-- Wiersz 1: Nazwy kolumn -->
                 <tr>
                     <th></th>
                     <th>User Email</th>
                     <th>Parking Space Name</th>
                     <th>Vehicle Plate</th>
                     <th>Status</th>
-                </tr>   
-                <!-- Wiersz 2: Filtry -->
+                </tr>
                 <tr>
                     <th></th>
                     <th>
@@ -203,17 +185,17 @@
             <ng-template pTemplate="body" let-reservation>
                 <tr>
                     <td style="text-align: center;">
-                        <p-button 
+                        <p-button
                             icon="pi pi-check"
                             (click)="acceptReservation(reservation.parkingSpaceId)"
                             styleClass="p-button-success p-button-outlined action-button-circle"
-                            tooltipPosition="top" 
+                            tooltipPosition="left"
                             pTooltip="Accept"/>
-                        <p-button 
-                            icon="pi pi-times" 
+                        <p-button
+                            icon="pi pi-times"
                             (click)="deleteReservation(reservation.parkingSpaceId)"
-                            styleClass="p-button-danger p-button-outlined action-button-circle" 
-                            tooltipPosition="top" 
+                            styleClass="p-button-danger p-button-outlined action-button-circle"
+                            tooltipPosition="right"
                             pTooltip="Decline" />
                     </td>
                     <td>{{ reservation.userEmail }}</td>

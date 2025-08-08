@@ -1,1 +1,246 @@
-<p>settings works!</p>
+<div class="p-8">
+
+  <h1 class="text-3xl font-bold text-slate-800 mb-6">Settings</h1>
+
+  <p-tabs value="0">
+    <p-tablist>
+      <p-tab value='0'>My Profile</p-tab>
+      <p-tab [disabled]="loggedUser?.role != 'Admin'" value='1'>Application Settings</p-tab>
+    </p-tablist>
+    <p-tabpanels>
+      <p-tabpanel value="0">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 p-4">
+
+          <div class="md:col-span-1">
+            <h2 class="text-lg font-semibold text-slate-700">Profile Information</h2>
+            <p class="text-sm text-slate-500 mt-1">Update your account's profile information and email address.</p>
+          </div>
+
+          <div class="md:col-span-2 bg-white rounded-xl shadow-md">
+            <form class="flex flex-col" [formGroup]="form" (submit)="changeUserInfo()">
+              <div class="p-6 space-y-6">
+                <p-floatlabel>
+                  <input
+                    formControlName="name"
+                    pInputText
+                    id="firstName"
+                    class="w-full border focus:outline-none p-2 rounded" />
+                  <label for="firstName">First Name</label>
+                </p-floatlabel>
+                <p-floatlabel>
+                  <input
+                    formControlName="surname"
+                    pInputText
+                    id="lastName"
+                    class="w-full border focus:outline-none p-2 rounded" />
+                  <label for="lastName">Last Name</label>
+                </p-floatlabel>
+                <p-floatlabel>
+                  <input
+                    formControlName="email"
+                    pInputText
+                    id="email"
+                    type="text"
+                    class="w-full border focus:outline-none p-2 rounded" />
+                  <label for="email">Email Address</label>
+                </p-floatlabel>
+              </div>
+              <div class="bg-slate-50 px-6 py-4 rounded-b-xl text-right">
+                <p-button [disabled]="!form.dirty" type="submit" label="Save Changes" icon="pi pi-check"></p-button>
+              </div>
+            </form>
+          </div>
+
+          <div class="md:col-span-1">
+            <h2 class="text-lg font-semibold text-slate-700">Update Password</h2>
+            <p class="text-sm text-slate-500 mt-1">Ensure your account is using a long, random password to stay secure.</p>
+          </div>
+          <div class="md:col-span-2 bg-white rounded-xl shadow-md">
+            <form class="flex flex-col" [formGroup]="passwordForm" (submit)="changePassword()">
+              <div class="p-6 space-y-6 ">
+                <p-floatlabel>
+                  <p-password
+                    formControlName="currentPassword"
+                    inputId="current_password"
+                    [feedback]="false"
+                    [toggleMask]="true"
+                    inputStyleClass="w-full border focus:outline-none p-2 rounded">
+                  </p-password>
+                  <label for="current_password">Current Password</label>
+                </p-floatlabel>
+                <p-floatlabel>
+                  <p-password
+                    formControlName="newPassword"
+                    inputId="new_password"
+                    [feedback]="false"
+                    [toggleMask]="true"
+                    inputStyleClass="w-full border focus:outline-none p-2 rounded">
+                  </p-password>
+                  <label for="new_password">New Password</label>
+                </p-floatlabel>
+                <p-floatlabel>
+                  <p-password
+                    formControlName="confirmNewPassword"
+                    inputId="confirm_password"
+                    [feedback]="false"
+                    [toggleMask]="true"
+                    inputStyleClass="w-full border focus:outline-none p-2 rounded">
+                  </p-password>
+                  <label for="confirm_password">Confirm Password</label>
+                </p-floatlabel>
+              </div>
+              <div class="bg-slate-50 px-6 py-4 rounded-b-xl text-right">
+                <p-button type="submit" [disabled]="!passwordForm.valid" label="Update Password"></p-button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </p-tabpanel>
+
+      <p-tabpanel value="1">
+        <form class="p-4 space-y-8" [formGroup]="settingsForm">
+
+          <p-fieldset legend="Parking Management" [toggleable]="true">
+            <p class="text-sm text-slate-500 mb-6">
+              Configure core operational parameters of the parking facility.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" >
+
+              <div>
+                <label for="capacity" class="font-semibold block mb-2">Total Parking Capacity</label>
+                <p-inputNumber formControlName="totalCapacity" class="border focus:outline-none p-2 rounded" inputId="capacity" [min]="1" [showButtons]="true"></p-inputNumber>
+                <small class="block mt-1 text-slate-400">Total number of available spots.</small>
+              </div>
+
+              <div>
+                <label for="buffer_time" class="font-semibold block mb-2">Reservation Buffer Time</label>
+                <p-inputNumber formControlName="reservationBuffer" class="border focus:outline-none p-2 rounded" inputId="buffer_time" suffix=" minutes" [min]="5" [showButtons]="true"></p-inputNumber>
+                <small class="block mt-1 text-slate-400">Time a user has to arrive after making a reservation.</small>
+              </div>
+
+
+                <div>
+                  <label for="operatingHoursStart" class="font-semibold block mb-2">Operating Hours (Start)</label>
+                  <p-inputMask
+                    formControlName="operatingHoursStart"
+                    mask="99:99"
+                    placeholder="08:00"
+                    styleClass="border focus:outline-none p-2 rounded">
+                  </p-inputMask>
+                  <small class="block mt-1 text-slate-400">Time the parking opens.</small>
+                </div>
+
+                <div>
+                  <label for="operatingHoursEnd" class="font-semibold block mb-2">Operating Hours (End)</label>
+                  <p-inputMask
+                    formControlName="operatingHoursEnd"
+                    mask="99:99"
+                    placeholder="22:00"
+                    styleClass="border focus:outline-none p-2 rounded">
+                  </p-inputMask>
+                  <small class="block mt-1 text-slate-400">Time the parking closes.</small>
+                </div>
+
+            </div>
+          </p-fieldset>
+
+          <p-fieldset legend="Financial Settings" [toggleable]="true" [collapsed]="true">
+            <p class="text-sm text-slate-500 mb-6">
+              Manage currency, tax rates, and payment gateway integrations.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+              <div class="mt-2">
+                <p-floatlabel>
+                  <p-inputNumber formControlName="pricePerHour"  inputId="price_hour" mode="currency" currency="PLN" class=" border focus:outline-none p-3 rounded-lg"></p-inputNumber>
+                  <label for="price_hour">Price per Hour</label>
+                </p-floatlabel>
+              </div>
+
+              <div class="mt-2">
+                <p-floatlabel>
+                  <p-select  inputId="currency" [options]="['PLN', 'EUR', 'USD']" class="w-50 border focus:outline-none p-1 rounded-lg"></p-select>
+                  <label for="currency">Currency</label>
+                </p-floatlabel>
+              </div>
+
+              <div class="mt-2">
+                <p-floatlabel>
+                  <p-inputNumber formControlName="vat" inputId="tax_rate" suffix=" %" class="border focus:outline-none p-3 rounded-lg"></p-inputNumber>
+                  <label for="tax_rate">VAT Rate</label>
+                </p-floatlabel>
+              </div>
+            </div>
+
+            <div class="mt-8 border-t pt-6">
+              <h3 class="font-semibold text-slate-700 mb-4">Payment Gateway (Stripe)</h3>
+              <div class="space-y-8 mt-8">
+                <p-floatlabel class="mt-3">
+                  <input formControlName="stripePublicKey"  pInputText id="stripe_pk" class="w-full md:w-2/3 border focus:outline-none p-1 rounded-lg" />
+                  <label for="stripe_pk">Stripe Public Key</label>
+                </p-floatlabel>
+                <p-floatlabel>
+                  <p-password formControlName="stripePrivateKey"  inputId="stripe_sk" [feedback]="false" [toggleMask]="true"   class="w-full md:w-2/3 border focus:outline-none p-1 rounded-lg"></p-password>
+                  <label for="stripe_sk">Stripe Secret Key</label>
+                </p-floatlabel>
+              </div>
+            </div>
+          </p-fieldset>
+
+
+          <p-fieldset legend="Security & Accounts" [toggleable]="true" [collapsed]="true">
+            <p class="text-sm text-slate-500 mb-6">
+              Define password policies and security measures for user accounts.
+            </p>
+            <div class="space-y-4">
+              <div>
+                <h4 class="text-base font-semibold text-slate-800 mb-4">Password Requirements</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div class="flex items-center">
+                    <p-checkbox formControlName="requireDigitPassword" inputId="req_digit" binary="true"></p-checkbox>
+                    <label for="req_digit" class="ml-3 font-medium text-slate-600">Require a digit</label>
+                  </div>
+                  <div class="flex items-center">
+                    <p-checkbox formControlName="requireSpecialCharPassword" inputId="req_special" binary="true"></p-checkbox>
+                    <label for="req_special" class="ml-3 font-medium text-slate-600">Require a special character</label>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <label for="req_length" class="font-medium text-slate-600">Minimum length:</label>
+                    <p-inputNumber formControlName="minLengthPassword" inputId="req_length" [showButtons]="true" [min]="6" styleClass="w-24" class="border p-2 rounded"></p-inputNumber>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h4 class="text-base font-semibold text-slate-800 mb-4">Login Security</h4>
+                <div class="flex items-center gap-2">
+                  <label for="lock_attempts" class="font-medium text-slate-600">Lock account after</label>
+                  <p-inputNumber formControlName="failedLoginAttempts"  class="border p-2 rounded" inputId="lock_attempts" [showButtons]="true" [min]="3"></p-inputNumber>
+                  <label for="lock_attempts" class="font-medium text-slate-600">failed login attempts.</label>
+                </div>
+              </div>
+
+            </div>
+          </p-fieldset>
+
+          <div class="flex justify-end mt-8">
+            <p-button type="submit" label="Save All Application Settings" icon="pi pi-save" severity="success" size="large"></p-button>
+          </div>
+
+        </form>
+      </p-tabpanel>
+    </p-tabpanels>
+
+
+<!--    <p-tab header="Application Settings" headerStyleClass="p-2 ml-6" [disabled]="loggedUser?.role != 'Admin'">-->
+<!--      <ng-template pTemplate="header">-->
+<!--        <div class="flex items-center gap-2">-->
+<!--          <i class="pi pi-cog"></i>-->
+<!--          <span class="font-bold">Application Settings</span>-->
+<!--        </div>-->
+<!--      </ng-template>-->
+<!--    </p-tab>-->
+
+  </p-tabs>
+
+</div>

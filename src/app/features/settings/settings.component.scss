@@ -1,0 +1,68 @@
+:host ::ng-deep {
+
+  .p-fieldset {
+    margin-bottom: 2rem;
+  }
+
+  .p-fieldset .p-fieldset-legend {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1e293b;
+  }
+
+  .p-fieldset .p-fieldset-content > p.text-sm {
+    color: #64748b;
+    margin-bottom: 2rem !important;
+  }
+
+
+  label.font-semibold {
+    color: #334155;
+    margin-bottom: 0.75rem !important;
+  }
+
+  small.block {
+    color: #94a3b8;
+    margin-top: 0.5rem !important;
+  }
+
+  .p-fieldset .border-t {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+  }
+
+  h3.font-semibold {
+    color: #334155;
+  }
+
+  .flex.justify-end.mt-8 {
+    margin-top: 3rem !important;
+  }
+
+  .p-inputswitch {
+    &.p-inputswitch-checked .p-inputswitch-slider {
+      background: var(--p-primary-color) !important;
+    }
+  }
+
+  .p-checkbox {
+    .p-checkbox-box {
+      @apply w-5 h-5 border-2 border-slate-300 rounded-md transition-all;
+
+      &:not(.p-highlight):hover {
+        @apply border-violet-400;
+      }
+    }
+
+    .p-checkbox-box.p-highlight {
+      @apply bg-violet-600 border-violet-600;
+
+      .p-checkbox-icon {
+        @apply text-white;
+        background-color: black;
+        background: black;
+        color: black;
+      }
+    }
+  }
+}

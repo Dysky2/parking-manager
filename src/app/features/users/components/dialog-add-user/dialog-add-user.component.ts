@@ -47,7 +47,7 @@ export class DialogAddUserComponent implements OnInit {
     this.form = this.fb.group({
       name: ["", Validators.required],
       surname: ["", Validators.required],
-      email: ["", Validators.required],
+      email: ["", [Validators.required, Validators.email]],
       password: ["", Validators.required],
       role: [null , Validators.required]
     })

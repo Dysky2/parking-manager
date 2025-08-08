@@ -31,14 +31,24 @@
 
         <div class="md:col-span-2">
           <p-floatlabel>
-            <input formControlName="email" pInputText id="email" name="email" type="email" class="w-full bg-white border focus:outline-none p-2 rounded" />
+            <input formControlName="email" pInputText id="email" name="email" type="email" class="w-full bg-white border focus:outline-none p-2 rounded" required/>
             <label for="email">Email Address</label>
           </p-floatlabel>
         </div>
 
         <div class="md:col-span-2">
           <p-floatlabel>
-            <p-password formControlName="password" inputId="password" [toggleMask]="true" styleClass="w-full border focus:outline-none p-2 rounded" inputStyleClass="w-full" [feedback]="false"></p-password>
+            <p-password
+              formControlName="password"
+              inputId="password"
+              [toggleMask]="true"
+              styleClass="w-full border focus:outline-none p-2 rounded"
+              title="Minimum 6 characters at least 1 Alphabet and 1 Number"
+              pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
+              inputStyleClass="w-full"
+              [feedback]="false"
+              required>
+            </p-password>
             <label for="password">Password</label>
           </p-floatlabel>
         </div>

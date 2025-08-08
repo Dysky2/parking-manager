@@ -9,12 +9,13 @@ import { ParkingSpaceService } from '../../core/services/parking-space.service';
 import { ConfirmationService, MessageService  } from 'primeng/api';
 import { SelectModule } from 'primeng/select';
 import { TagModule } from 'primeng/tag';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
+import {Tooltip} from "primeng/tooltip";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, MatIconModule , TableModule, ButtonModule, SelectModule, TagModule, FormsModule],
+  imports: [CommonModule, MatIconModule, TableModule, ButtonModule, SelectModule, TagModule, FormsModule, Tooltip],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
@@ -27,7 +28,7 @@ export class DashboardComponent implements OnInit {
   numberOfAllParkingSpaces: number = 0;
   numberOfAvailableParkingSpaces: number = 0;
   numberOfOccupiedParkingSpaces: number = 0;
-  percentOfOccupiedPlaces: number = 0; 
+  percentOfOccupiedPlaces: number = 0;
 
   first: number = 0;
   statuses!: any[];
