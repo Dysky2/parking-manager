@@ -1,0 +1,121 @@
+<div class="fixed inset-0 bg-opacity-50 flex justify-center items-center z-50">
+
+    <div [ngSwitch]="data.space.status">
+        <ng-template [ngSwitchCase]="'Available'">
+            <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 m-4">
+
+                <!-- NAGŁÓWEK -->
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-800">Zarejestruj Wjazd</h2>
+                        <p class="text-slate-500">Miejsce parkingowe: <span class="font-semibold text-purple-600">A11</span></p>
+                    </div>
+                    <!-- Przycisk do zamykania okna -->
+                    <button class="text-slate-400 hover:text-slate-600 transition-colors" (click)="dialogClose()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+
+                <form class="flex flex-col space-y-6" [formGroup]="form" (ngSubmit)="dialogSubmit()">
+
+                <!-- POLE 1: Numer Rejestracyjny -->
+                    <div class="flex flex-col">
+                        <label for="vehiclePlate" class="mb-2 text-slate-600 font-semibold">Numer Rejestracyjny</label>
+                        <input 
+                        id="vehiclePlate"
+                        type="text" 
+                        placeholder="np. KRA 12345"
+                        maxlength="7"
+                        formControlName="vehiclePlate"
+                        class="bg-white w-full px-4 py-3 border rounded-lg"
+                        autocomplete="off">
+                    </div>
+                    <div *ngIf="form.get('vehiclePlate')?.invalid && (form.get('vehiclePlate')?.dirty || form.get('vehiclePlate')?.touched)">
+                        <small *ngIf="form.get('vehiclePlate')?.errors?.['required']" class="error-message">
+                        To pole jest wymagane.
+                        </small>
+                        <small *ngIf="form.get('vehiclePlate')?.errors?.['pattern']" class="error-message">
+                        Niepoprawny format numeru rejestracyjnego.
+                        </small>
+                    </div>
+
+                    <!-- POLE 2: Przypisz do Użytkownika (Opcjonalne) -->
+                    <div class="flex flex-col">
+                        <label for="userSelect" class="mb-2 font-semibold text-slate-700">Przypisz do użytkownika </label>
+                        <p-select 
+                            [options]="users"
+                            [(ngModel)]="selectedUser" 
+                            formControlName="user"
+                            optionLabel="email" 
+                            [filter]="true" 
+                            [showClear]="true"
+                            placeholder="Select a User">
+                            <ng-template #selectedItem let-selectedUser>
+                                <div class="flex items-center">
+                                    <div>{{ selectedUser.email }}</div>
+                                </div>
+                            </ng-template>
+                            <ng-template let-user #item>
+                                <div class="flex items-center">
+                                    <div>{{ user.email }}</div>
+                                </div>
+                            </ng-template>
+                        </p-select>
+                    </div>
+
+                    <div class="flex justify-end items-center pt-4 space-x-4">
+                        <!-- Przycisk "Anuluj" -->
+                        <button type="button" class="px-6 py-3 font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition-colors" (click)="dialogClose()">
+                        Anuluj
+                        </button>
+                        <!-- Przycisk "Potwierdź" -->
+                        <button type="submit" 
+                                [disabled]="!form.valid"
+                                class="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-shadow disabled:opacity-50 disabled:cursor-not-allowed">
+                        Potwierdź Wjazd
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </ng-template>
+
+        <ng-template [ngSwitchCase]="'Occupied'">
+            <p-toast />
+            <p-confirmdialog />
+            <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 m-4">
+
+                <!-- NAGŁÓWEK -->
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-800">Zarejestruj Wjazd</h2>
+                        <p class="text-slate-500">Miejsce parkingowe: <span class="font-semibold text-purple-600">A11</span></p>
+                    </div>
+                    <!-- Przycisk do zamykania okna -->
+                    <button class="text-slate-400 hover:text-slate-600 transition-colors" (click)="dialogClose()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+
+                <!-- Informacje o parkowaniu -->
+                <div class="space-y-4 text-slate-700">
+                    <p><strong>Numer Rejestracyjny:</strong> {{ data.space.vehiclePlate }}</p>
+                    <p><strong>Czas Wjazdu: </strong>{{ data.space.createdDataTime | date: 'HH:mm dd.MM.yyyy' }}</p>
+                    <!-- Można dodać inne informacje -->
+                </div>
+                <!-- Przyciski -->
+                <div class="flex justify-end items-center pt-8">
+                    <button
+                        (click)="endParkingSpace()"
+                        type="button"
+                        class="flex items-center justify-center bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors duration-200">
+                        <mat-icon class="mr-2">cancel</mat-icon>
+                        <span>Zakończ Parkowanie</span>
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+
+    
+</div>

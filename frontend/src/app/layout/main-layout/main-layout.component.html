@@ -1,0 +1,24 @@
+<!-- Układ dwukolumnowy -->
+<div class="flex bg-white">
+
+  <!-- Lewa kolumna: Sidenav (w stałym kontenerze) -->
+  <div class="sideNav_container h-screen sticky top-0">
+    <app-sidenav></app-sidenav>
+  </div>
+
+  <!-- Prawa kolumna z Topnavem i treścią strony -->
+  <div class="flex-1 flex flex-col bg-white">
+
+    <!-- Topnav na górze -->
+    <header>
+      <app-nav></app-nav>
+    </header>
+
+    <!-- Tutaj router będzie wstawiał komponenty podrzędne (Dashboard, Users itp.) -->
+    <main class="flex-1 p-8">
+
+      <router-outlet></router-outlet>
+    </main>
+    
+  </div>
+</div>

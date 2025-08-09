@@ -1,0 +1,181 @@
+$table-color: #ffffff;
+$table-text-color: #111827;
+
+:host ::ng-deep {
+
+   .p-datatable .p-datatable-header {
+        background: #ffffff;
+        color: $table-text-color;
+        border: none;
+    }
+
+    // --- KONTENER GŁÓWNY TABELI ---
+    .p-datatable-wrapper {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); // Subtelniejszy, ładniejszy cień
+        border: 1px solid #eef2ff; // Jasna ramka w kolorze fioletu
+    }
+
+    // --- GÓRNY NAGŁÓWEK (CAPTION) ---
+    .p-datatable-caption {
+        background: $table-color;
+        color: #111827;
+        border: none;
+        padding: 1.25rem;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 1.125rem;
+        font-weight: 700;
+    }
+
+    // --- NAGŁÓWKI KOLUMN (THEAD) ---
+    .p-datatable .p-datatable-thead > tr > th {
+        background: $table-color; // Bardzo jasne tło
+        color: #111827;      // Stonowany, szary tekst
+        border: none;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        padding: 1rem 1.25rem;
+    }
+
+    // --- POLA FILTRÓW (INPUT) ---
+    .p-column-filter-row {
+        background: $table-color;
+    }
+
+    .p-checkbox .p-checkbox-box{
+        border: 1px solid #cbd5e1;
+    }
+
+    .p-datatable .p-datatable-tbody > tr > td.p-selection-column {
+            
+            .p-checkbox .p-checkbox-box {
+                border-color: #cbd5e1;
+                
+                &:not(.p-highlight):hover {
+                    border-color: #a78bfa;
+                }
+            }
+
+            // ZWIĘKSZONA SPECYFICZNOŚĆ SELEKTORA
+            .p-checkbox .p-checkbox-box.p-highlight {
+                background: #000000 !important;    // Czarny, tak jak chciałeś
+                border-color: #000000 !important;    // Czarna ramka
+                
+                .p-checkbox-icon {
+                    color: rgb(255, 0, 0) !important; // Czerwony ptaszek
+                }
+            }
+        }
+
+    input.p-inputtext {
+        background: $table-color;
+        color: #334155;
+        border: 1px solid #cbd5e1;
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        transition: all 0.2s ease-in-out;
+
+        &:focus {
+            border-color: #000000; // Fiolet
+        }
+    }
+    
+    .p-column-filter-menu-button {
+        color: #fdfeff;
+    }
+
+    // --- CIAŁO TABELI (TBODY) ---
+    .p-datatable .p-datatable-tbody > tr {
+        background: $table-color;
+        color: #334155;
+        font-size: 0.875rem;
+        
+        // Linia oddzielająca wiersze
+        border-bottom: 1px solid #f1f5f9;
+
+        // Efekt po najechaniu myszką
+        // &:hover {
+        //     background: #6d6d6d !important;
+        // }
+    }
+    .p-datatable .p-datatable-tbody > tr > td {
+        border: none;
+        padding: 1.25rem; 
+    }
+
+    // --- PAGINATOR (STOPKA) - POPRAWIONA WERSJA ---
+    .p-paginator {
+        background: $table-color;
+        color: $table-text-color;
+        border-top: 1px solid #f1f5f9;
+        padding: 0.75rem 1.25rem;
+        
+        // NAPRAWA ODSTĘPÓW: Resetujemy zachowanie flex i justowania
+        .p-paginator-pages {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem; // Mały odstęp między przyciskami stron
+        }
+
+        // Przyciski stron i nawigacji
+        .p-paginator-page, .p-paginator-next, .p-paginator-prev, .p-paginator-first, .p-paginator-last {
+            border-radius: 6px;
+            min-width: 2.5rem;
+            height: 2.5rem;
+            transition: background-color 0.2s;
+            &:not(.p-disabled):hover {
+                color: white;
+                background: #000000;
+            }
+        }
+
+        // Aktywna strona - POPRAWIONY KOLOR
+        .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+            background: #ff0000 !important; // Czerwony
+            color: rgb(0, 0, 0) !important;   // Czarny tekst
+
+            // Dodatkowo, aby zapobiec zmianie koloru po najechaniu na aktywny przycisk
+            &:hover {
+                background: #ff0000 !important; // Pozostaje czerwony
+            }
+        }
+    }
+
+    .action-button-circle.p-button {
+        width: 2.5rem !important;      
+        height: 2.5rem !important;    
+
+        border-radius: 50% !important;
+
+        .p-button-icon {
+            font-size: 1.25rem;
+            margin: auto;      
+        }
+    }
+    
+    .action-button-circle.p-button-outlined {
+        background-color: transparent !important; 
+        
+        &.p-button-success .p-button-icon {
+            color: var(--p-green-500);
+        }
+        &.p-button-danger .p-button-icon {
+            color: var(--p-red-500);
+        }
+
+        &:hover {
+            &.p-button-success {
+                background-color: var(--p-green-500) !important;
+                .p-button-icon { color: white !important; }
+            }
+             &.p-button-danger {
+                background-color: var(--p-red-500) !important;
+                .p-button-icon { color: white !important; }
+            }
+        }
+    }
+
+}
