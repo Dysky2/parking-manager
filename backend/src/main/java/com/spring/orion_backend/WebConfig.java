@@ -13,7 +13,7 @@ public class WebConfig {
           @Override
           public void addCorsMappings(CorsRegistry registry) {
               registry.addMapping("/api/**")
-                      .allowedOrigins("http:localhost:4200")
+                      .allowedOrigins("https://dysky2.github.io")
                       .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                       .allowedHeaders("*")
                       .allowCredentials(true);

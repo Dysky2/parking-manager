@@ -9,7 +9,7 @@ import { HttpParams } from '@angular/common/http';
 })
 export class ParkingSpaceService {
 
-  private apiUrl = "http://localhost:8080/api/parking";
+  private apiUrl = "https://parking-manager-crdt.onrender.com";
 
   constructor(private http: HttpClient) { }
 

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200" , allowedHeaders = "*")
+@CrossOrigin(origins = "https://dysky2.github.io" , allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/parking")
 public class ParkingController {

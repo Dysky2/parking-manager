@@ -9,7 +9,7 @@ import { SuccessResponse } from "../models/successResponse.modal";
 })
 export class UserService {
 
-  private apiUrl = "http://localhost:8080/api/users";
+  private apiUrl = "https://parking-manager-crdt.onrender.com";
 
   constructor(private http: HttpClient) { }
 

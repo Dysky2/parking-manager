@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:4200" , allowedHeaders = "*")
+@CrossOrigin(origins = "https://dysky2.github.io" , allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -47,18 +47,10 @@ public class UserController {
         }
     }
 
-//    @PostMapping("/login")
-//    public User canUserLogIn(@RequestBody LoginRequest loginRequest) {return userRepository.getUserByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword()); }
-
     @PostMapping("/isExist")
     public Boolean isUserExist(@RequestBody LoginRequest loginRequest) {
         return userRepository.existsByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword());
     }
-
-//    @PostMapping("/isExist")
-//    public Boolean isUserExist(@RequestBody LoginRequest loginRequest) {
-//        return userRepository.existsByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword());
-//    }
 
     @PostMapping("/updatePassword")
     public ResponseEntity<Map<String, String>> updatePassword(@RequestBody PasswordRequest passwordRequest) {

@@ -8,7 +8,7 @@ import {Observable} from "rxjs";
 })
 export class SettingService {
 
-  private apiUrl: string = 'http://localhost:8080/api/settings';
+  private apiUrl: string = 'https://parking-manager-crdt.onrender.com';
 
   constructor(private http: HttpClient) { }
 
