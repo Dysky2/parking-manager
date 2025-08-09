@@ -49,26 +49,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.parkingSpaceService.getAllParkingSpaces().subscribe((parkingSpaces) => {
         this.activeSessions = parkingSpaces;
+
+        this.calculateKpiValues(parkingSpaces);
     })
-
-    this.parkingSpaceService.getNumberOfParkingSpaces().subscribe((countsOfParkingSpaces) => {
-      this.numberOfAllParkingSpaces = countsOfParkingSpaces;
-    })
-
-    this.parkingSpaceService.getNumberOfParkingSpacesByStatus("Available").subscribe((countsOfParkingSpaces) => {
-      this.numberOfAvailableParkingSpaces = countsOfParkingSpaces;
-    })
-
-    this.parkingSpaceService.getNumberOfParkingSpacesByStatus("Occupied").subscribe((countsOfParkingSpaces) => {
-      this.numberOfOccupiedParkingSpaces = countsOfParkingSpaces;
-
-      if(this.numberOfAllParkingSpaces > 0) {
-        this.percentOfOccupiedPlaces = Math.round((this.numberOfOccupiedParkingSpaces / this.numberOfAllParkingSpaces) * 100);
-      } else {
-        this.percentOfOccupiedPlaces = 0;
-      }
-    })
-
 
     this.fetchParkingSpacesReservationsTable();
 
@@ -80,6 +63,26 @@ export class DashboardComponent implements OnInit {
       { label: 'Reserved', value: 'Reserved' },
       { label: 'Maintenance', value: 'Maintenance' }
     ]
+  }
+
+  calculateKpiValues(spaces: ParkingSpace[]) {
+    if (!spaces) {
+      this.numberOfAllParkingSpaces = 0;
+      this.numberOfAvailableParkingSpaces = 0;
+      this.numberOfOccupiedParkingSpaces = 0;
+      this.percentOfOccupiedPlaces = 0;
+      return;
+    }
+    this.numberOfAllParkingSpaces = spaces.length;
+
+    this.numberOfAvailableParkingSpaces = spaces.filter(s => s.status === 'Available').length;
+    this.numberOfOccupiedParkingSpaces = spaces.filter(s => s.status === 'Occupied').length;
+
+    if (this.numberOfAllParkingSpaces > 0) {
+      this.percentOfOccupiedPlaces = Math.round((this.numberOfOccupiedParkingSpaces / this.numberOfAllParkingSpaces) * 100);
+    } else {
+      this.percentOfOccupiedPlaces = 0;
+    }
   }
 
   getSeverity(status: string) {
