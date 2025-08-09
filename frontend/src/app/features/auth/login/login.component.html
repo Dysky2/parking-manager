@@ -1,6 +1,6 @@
 <div class="form-wrapper">
     <main class="form-side">
-        <a href="dashboard" title="Logo" class="go_back_container">
+        <a [routerLink]="['/dashboard']"  title="Logo" class="go_back_container">
             <mat-icon aria-hidden="false" fontIcon="arrow_back" class="logo"></mat-icon>
             <div class="go_back">Go back</div>
         </a>
@@ -10,13 +10,13 @@
                 <h2>Login with your account!</h2>
             </div>
             <div class="socials-row">
-                <a href="dashboard" title="Use Apple">
+                <a title="Use Apple">
                     <img src="assets/img/apple.png" alt="Apple">
                     Continue with Apple
                 </a>
             </div>
             <div class="socials-row">
-                <a href="dashboard" title="Use Github">
+                <a title="Use Github">
                     <img src="assets/img/google.png" alt="Google">
                     Continue with Google
                 </a>

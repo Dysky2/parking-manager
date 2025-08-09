@@ -29,7 +29,6 @@ export class DialogAddParkingSpaceComponent implements OnInit {
   }
 
   addParkingSpace() {
-    console.log(this.form.value.parkingSpaceName);
     this.parkingSpaceService.addParkingSpace(this.form.value.parkingSpaceName).subscribe(() => {
 
       this.dialogRef.close(true);

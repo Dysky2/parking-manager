@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { UserService } from './user.service';
 import { User } from '../models/user.model';
-import {async, map, Observable, of, tap} from 'rxjs';
+import { async, map, Observable, of } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -41,7 +41,6 @@ export class AuthService implements OnInit {
   logIn(email: string, password: string) {
     this.userService.logIn(email, password).subscribe({
       next: (user) => {
-        console.log(user);
         if(user != null) {
           this.setToken(user.userId);
           this.messageService.add({ severity: 'info', summary: 'LogIn', detail: 'You are succeed login', life: 2000 });

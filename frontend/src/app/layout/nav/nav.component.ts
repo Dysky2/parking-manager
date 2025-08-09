@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -22,6 +22,8 @@ import { BadgeModule } from 'primeng/badge';
   styleUrl: './nav.component.scss'
 })
 export class NavComponent implements OnInit {
+  @Output() toggleSidebar = new EventEmitter<void>();
+
  breadcrumbs = {
     parent: 'Pages',
     current: 'Dashboard'

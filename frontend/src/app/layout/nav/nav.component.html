@@ -1,8 +1,14 @@
 <nav class="w-full bg-white py-4 px-8">
   <div class="flex items-center justify-between">
 
+    <button 
+      (click)="toggleSidebar.emit()" 
+      class="rounded-full hover:bg-slate-100 lg:hidden">
+      <mat-icon>menu</mat-icon>
+    </button>
+
     <div>
-      <div class="text-sm text-gray-400">
+      <div class="text-sm text-gray-400 hidden sm:block">
         <span>{{ breadcrumbs.parent }}</span>
         <span class="mx-1">/</span>
         <span class="text-gray-800">{{ breadcrumbs.current }}</span>
@@ -10,13 +16,13 @@
       <h1 class="text-lg font-bold text-slate-700">{{ breadcrumbs.current }}</h1>
     </div>
 
-    <div class="flex items-center space-x-6">
+    <div class="flex items-center space-x-4">
 
       <!-- <a href="#" class="text-gray-600 hover:text-gray-900">
         <mat-icon class="text-xl">notifications</mat-icon>
       </a> -->
 
-      <a href="settings" class="text-gray-600 hover:text-gray-900">
+      <a [routerLink]="['/settings']" class="flex items-center h-10 px-3 text-gray-600 hover:text-gray-900 transition-colors">
         <mat-icon class="text-xl">settings</mat-icon>
       </a>
 

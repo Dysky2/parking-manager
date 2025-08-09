@@ -1,6 +1,6 @@
-<div class="p-8">
+<div class="grid p-4 md:p-6">
 
-  <div class="bg-white rounded-xl shadow-md">
+  <div class="bg-white rounded-xl shadow-md overflow-x-auto">
 
     <p-table
         #dt
@@ -14,6 +14,9 @@
         editMode="row"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [showCurrentPageReport]="true"
+        [scrollable]="true" 
+        scrollHeight="flex"
+        class="p-datatable-gridlines"
         selectionMode="multiple">
 
         <ng-template pTemplate="caption">
@@ -58,7 +61,6 @@
             </tr>
         </ng-template>
 
-        <!-- Ciało tabeli -->
         <ng-template pTemplate="body" let-user let-editing="editing"  let-i="rowIndex">
             <tr [pEditableRow]="user">
                 <td>
