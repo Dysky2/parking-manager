@@ -7,13 +7,17 @@ import { User } from '../../core/models/user.model';
 import { ButtonModule } from 'primeng/button';
 import  { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
-import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import {SidebarModule} from "primeng/sidebar";
+import {OverlayPanelModule} from "primeng/overlaypanel";
+import {TabViewModule} from "primeng/tabview";
+import { PopoverModule } from 'primeng/popover';
+import { BadgeModule } from 'primeng/badge';
 
 @Component({
   selector: 'app-nav',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatIconModule, ButtonModule, MenuModule],
+  imports: [CommonModule, RouterModule, MatIconModule, ButtonModule, MenuModule, SidebarModule, OverlayPanelModule, TabViewModule, PopoverModule, BadgeModule],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.scss'
 })
@@ -23,11 +27,25 @@ export class NavComponent implements OnInit {
     current: 'Dashboard'
   };
 
+  isOpen: boolean = false;
+
+  activeTab: string = 'inbox';
+
+  tabs = [
+    { label: 'Inbox', key: 'inbox' },
+    { label: 'General', key: 'general' },
+    { label: 'Archived', key: 'archived' }
+  ];
+
+  setActiveTab(tab: string): void {
+    this.activeTab = tab;
+  }
+
   userMenuItems: MenuItem[] = [];
 
   $currentUser: Observable<User | null>;
   $authStateChecked: Observable<boolean>;
-  
+
   constructor(private authService: AuthService) {
     this.$currentUser = this.authService.currentUser$;
     this.$authStateChecked = this.authService.authStateChecked$;
@@ -46,20 +64,24 @@ export class NavComponent implements OnInit {
     }
   }
 
+  toggleNotifications(event: Event): void {
+    this.isOpen = !this.isOpen;
+  }
+
 buildUserMenu() {
     this.userMenuItems = [
       {
         label: 'Mój Profil',
         icon: 'pi pi-user',
-        routerLink: '/profile' 
+        routerLink: '/profile'
       },
       {
-        separator: true // Linia oddzielająca
+        separator: true
       },
       {
         label: 'Logout from profile',
         icon: 'pi pi-sign-out',
-        command: () => { 
+        command: () => {
           this.logout();
         }
       }

@@ -51,7 +51,7 @@ export class UserComponent implements OnInit {
               private confirmationService: ConfirmationService) {}
 
   ngOnInit(): void {
-  this.fetchUserData();
+    this.fetchUserData();
 
     this.authService.getLoggedUser().subscribe({
       next: (users) => {

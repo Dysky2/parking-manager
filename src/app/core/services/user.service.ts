@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
+import { SuccessResponse } from "../models/successResponse.modal";
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,7 @@ export class UserService {
     return this.http.delete<User>(`${this.apiUrl}/delete/${userId}`);
   }
 
-  logIn(email: string, password: string): Observable<User> {
+  logIn(email: string, password: string): Observable<User | null> {
     const credentials = {email, password };
     return this.http.post<User>(`${this.apiUrl}/login`, credentials);
   }
@@ -40,6 +41,11 @@ export class UserService {
   isAccountExist(email: string, password: string) {
     const credentials = {email, password };
     return this.http.post<boolean>(`${this.apiUrl}/isExist`, credentials);
+  }
+
+  updatePassword(email: string, currentPassword: string, newPassword: string, confirmNewPassword: string): Observable<SuccessResponse> {
+    const credentials = {email, currentPassword, newPassword, confirmNewPassword};
+    return this.http.post<SuccessResponse>(`${this.apiUrl}/updatePassword`, credentials);
   }
 
   getLoggedUser(user: User) {

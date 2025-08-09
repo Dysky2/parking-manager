@@ -19,8 +19,8 @@ import { AuthService } from '../../../core/services/auth.service';
 export class RegisterComponent implements OnInit {
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder, 
-              private router: Router, 
+  constructor(private fb: FormBuilder,
+              private router: Router,
               private userService: UserService,
               private authService: AuthService,
               private messageService: MessageService) {}
@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
       password: ["", Validators.required]
     })
   }
-  
+
   createUser() {
     this.userService.isAccountExist(this.form.value.email, this.form.value.password).subscribe((exist) => {
       if(!exist) {
@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(["./dashboard"]);
         });
       } else {
-        this.messageService.add({ severity: 'warn', summary: 'Email or password', detail: 'Email or password are invalid', life: 2000 });
+        this.messageService.add({ severity: 'warn', summary: 'Email or password', detail: 'Email are inused', life: 2000 });
       }
     });
   }

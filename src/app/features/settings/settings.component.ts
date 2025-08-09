@@ -14,7 +14,7 @@ import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule  } from "primeng/floatlabel";
 import { InputTextModule } from 'primeng/inputtext';
 import { FieldsetModule } from 'primeng/fieldset';
-import { PasswordModule } from 'primeng/password';
+import { PasswordModule} from 'primeng/password';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DatePickerModule } from 'primeng/datepicker';
 import {SelectModule} from "primeng/select";
@@ -162,37 +162,31 @@ export class SettingsComponent implements OnInit{
       header: 'Confirm',
       icon: 'pi pi-info-circle',
       accept: () => {
-        if (this.passwordForm.valid) {
-          console.log(this.loggedUser);
-          if (this.passwordForm.value.currentPassword == this.loggedUser?.password) {
-            if(this.passwordForm.value.newPassword == this.passwordForm.value.confirmNewPassword) {
-              if(this.passwordForm.value.newPassword != this.passwordForm.value.currentPassword) {
-                const userUpdate = {
-                  ...this.loggedUser,
-                  password: this.passwordForm.value.newPassword
-                } as User;
-
-                this.userService.updateUser(userUpdate).subscribe({
-                  next: user => {
-                    this.authService.setLoggedInUser(userUpdate);
-                    this.fetchLoggedUser();
-                    this.messageService.add({severity: 'success', summary: 'Password successfully changed'});
-                    this.passwordForm.reset();
-                  },
-                  error: error => {
-                    this.messageService.add({severity: 'error', summary: 'something went wrong'});
-                    console.error(error);
-                  }
-                })
-              } else {
-                this.messageService.add({severity: 'error', summary: 'New password is the same as current password'});
-              }
-            } else {
-              this.messageService.add({severity: 'error', summary: 'New password is not match confirm password'});
+        if (this.passwordForm.valid && this.loggedUser?.email) {
+          this.userService.updatePassword(
+            this.loggedUser?.email,
+            this.passwordForm.value.currentPassword,
+            this.passwordForm.value.newPassword,
+            this.passwordForm.value.confirmNewPassword
+          ).subscribe({
+            next: (res) => {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: res.message
+              });
+              this.passwordForm.reset();
+            },
+            error: httpError => {
+              console.error(httpError);
+              const errorMessage = httpError.error?.message || 'An unknown error occurred.';
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: errorMessage,
+              });
             }
-          } else {
-            this.messageService.add({severity: 'error', summary: 'Current password is invalid'});
-          }
+          });
         }
       }
     })

@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { UserService } from './user.service';
 import { User } from '../models/user.model';
-import { Observable, of } from 'rxjs';
+import {async, map, Observable, of, tap} from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -39,12 +39,21 @@ export class AuthService implements OnInit {
   }
 
   logIn(email: string, password: string) {
-    this.userService.logIn(email, password).subscribe((user) => {
-      if(this.isNotEmpty(user)) {
-        this.setToken(user.userId);
-        this.messageService.add({ severity: 'info', summary: 'LogIn', detail: 'You are succeed login', life: 2000 });
-        this.setLoggedInUser(user);
-        this.router.navigate(["./dashboard"]);
+    this.userService.logIn(email, password).subscribe({
+      next: (user) => {
+        console.log(user);
+        if(user != null) {
+          this.setToken(user.userId);
+          this.messageService.add({ severity: 'info', summary: 'LogIn', detail: 'You are succeed login', life: 2000 });
+          this.setLoggedInUser(user);
+          this.router.navigate(["./dashboard"]);
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'LogIn', detail: 'Email or password is incorrect', life: 2000 });
+        }
+      },
+      error: (error) => {
+        console.error(error)
+        this.messageService.add({ severity: 'error', summary: 'LogIn', detail: `Something went wrong`, life: 2000 });
       }
     });
   }
@@ -60,6 +69,20 @@ export class AuthService implements OnInit {
 
   setToken(token: string) {
     localStorage.setItem("token", token);
+  }
+
+  isAdminLogged(): Observable<boolean>{
+    const token = this.getToken();
+
+    if(!token) {
+      return of(false);
+    }
+
+    return this.userService.getUserById(token).pipe(
+      map(user => {
+        return user && user.role === "Admin";
+      })
+    )
   }
 
   getLoggedUser(): Observable<User | null> {
