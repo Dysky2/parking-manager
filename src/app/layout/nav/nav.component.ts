@@ -31,12 +31,6 @@ export class NavComponent implements OnInit {
 
   activeTab: string = 'inbox';
 
-  tabs = [
-    { label: 'Inbox', key: 'inbox' },
-    { label: 'General', key: 'general' },
-    { label: 'Archived', key: 'archived' }
-  ];
-
   setActiveTab(tab: string): void {
     this.activeTab = tab;
   }
@@ -68,18 +62,11 @@ export class NavComponent implements OnInit {
     this.isOpen = !this.isOpen;
   }
 
-buildUserMenu() {
+  buildUserMenu() {
     this.userMenuItems = [
       {
-        label: 'Mój Profil',
-        icon: 'pi pi-user',
-        routerLink: '/profile'
-      },
-      {
-        separator: true
-      },
-      {
         label: 'Logout from profile',
+        style: {"padding": "4px"},
         icon: 'pi pi-sign-out',
         command: () => {
           this.logout();
