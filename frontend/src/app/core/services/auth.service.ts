@@ -20,12 +20,8 @@ export class AuthService implements OnInit {
 
   constructor(private userService: UserService,
               private router: Router,
-              private messageService: MessageService,) {
+              private messageService: MessageService) {
     this.checkInitialAuthState();
-   }
-
-  isNotEmpty(value: any): boolean {
-    return value != null || value != undefined || value != "";
   }
 
   ngOnInit(): void {}
@@ -82,6 +78,10 @@ export class AuthService implements OnInit {
         return user && user.role === "Admin";
       })
     )
+  }
+
+  isUserLogged(): boolean {
+    return this.getToken() !== null;
   }
 
   getLoggedUser(): Observable<User | null> {

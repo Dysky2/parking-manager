@@ -8,35 +8,31 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '../../../../../assets/angular-material/angular-material.module';
 import { FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { OnInit } from '@angular/core'; 
+import { OnInit } from '@angular/core';
 import { SelectModule } from 'primeng/select';
 import { User } from '../../../../core/models/user.model';
 import { UserService } from '../../../../core/services/user.service';
 import { ParkingSpaceService } from '../../../../core/services/parking-space.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationService, MessageService  } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { ConfirmDialog } from 'primeng/confirmdialog'
 
 @Component({
   selector: 'app-dialog-parking-card',
   standalone: true,
   imports: [
-    MatIconModule, 
+    MatIconModule,
     FloatLabelModule,
     InputTextModule,
-    ButtonModule, 
-    CommonModule, 
-    FormsModule, 
+    ButtonModule,
+    CommonModule,
+    FormsModule,
     AngularMaterialModule,
     ReactiveFormsModule,
     SelectModule,
     ToastModule,
-    ConfirmDialog
   ],
   templateUrl: './dialog-parking-card.component.html',
   styleUrl: './dialog-parking-card.component.scss',
-    providers: [ConfirmationService, MessageService]
 })
 
 export class DialogParkingCardComponent implements OnInit {
@@ -50,7 +46,6 @@ export class DialogParkingCardComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private userService: UserService,
-              private _snackBar: MatSnackBar,
               private confirmationService: ConfirmationService,
               private messageService: MessageService,
               private parkingSpaceService: ParkingSpaceService) {}
@@ -58,9 +53,9 @@ export class DialogParkingCardComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       vehiclePlate: ['', [
-        Validators.maxLength(7), 
-        Validators.required, 
-        Validators.pattern('/^([A-Z]{2}\s[A-Z0-9]{5})|([A-Z]{3}\s[A-Z0-9]{4})|([A-Z]{2}[A-Z0-9]{5})|([A-Z]{3}[A-Z0-9]{4})$/')
+        Validators.maxLength(7),
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z]{2,3}\s?[a-zA-Z0-9]{4,5}$/)
       ]],
       user: ['', Validators.required],
     })
@@ -77,13 +72,13 @@ export class DialogParkingCardComponent implements OnInit {
   dialogSubmit() {
     if(this.form.valid) {
       const currentDate = new Date();
-      this.parkingSpaceService.changeParkingSpaceStatus(this.data.space.parkingSpaceId, 
+      this.parkingSpaceService.changeParkingSpaceStatus(this.data.space.parkingSpaceId,
                                                         "Reserved",
-                                                         this.form.value.vehiclePlate, 
-                                                         this.form.value.user.email, 
+                                                         this.form.value.vehiclePlate.toUpperCase(),
+                                                         this.form.value.user.email,
                                                          currentDate.toISOString()).subscribe(() => {
-        this._snackBar.open("Parking space reserved successfully", "Close",  {
-          duration: 3000
+        this.messageService.add({
+          severity: 'success', summary: "Success", detail: "Parking space reserved successfully"
         })
         this.dialogRef.close(true);
       });

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
-import { UserService } from '../../core/services/user.service';
 import { ParkingSpace } from '../../core/models/parkingSpace.modal';
 import { ParkingSpaceService } from '../../core/services/parking-space.service';
 import { ConfirmationService, MessageService  } from 'primeng/api';
@@ -11,6 +10,7 @@ import { SelectModule } from 'primeng/select';
 import { TagModule } from 'primeng/tag';
 import { FormsModule } from '@angular/forms';
 import {Tooltip} from "primeng/tooltip";
+import { AuthService } from "../../core/services/auth.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -34,9 +34,10 @@ export class DashboardComponent implements OnInit {
   statuses!: any[];
   reservations!: ParkingSpace[];
   selectedReservations: {} | null = null;
+  isAdminLogged: boolean = false;
 
-  constructor(private userService: UserService,
-              private confirmationService: ConfirmationService,
+  constructor(private confirmationService: ConfirmationService,
+              private authService: AuthService,
               private messageService: MessageService,
               private parkingSpaceService: ParkingSpaceService) {}
 
@@ -51,6 +52,14 @@ export class DashboardComponent implements OnInit {
         this.activeSessions = parkingSpaces;
 
         this.calculateKpiValues(parkingSpaces);
+    })
+
+    this.authService.getLoggedUser().subscribe({
+      next: (users) => {
+        if(users?.role === "Admin") {
+          this.isAdminLogged = true;
+        }
+      }
     })
 
     this.fetchParkingSpacesReservationsTable();

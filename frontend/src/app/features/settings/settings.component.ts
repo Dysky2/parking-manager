@@ -22,6 +22,7 @@ import { CalendarModule } from "primeng/calendar";
 import { TabsModule } from 'primeng/tabs';
 import { FluidModule } from 'primeng/fluid';
 import { InputMaskModule } from 'primeng/inputmask';
+import {Tooltip} from "primeng/tooltip";
 
 @Component({
   selector: 'app-settings',
@@ -42,7 +43,8 @@ import { InputMaskModule } from 'primeng/inputmask';
     SelectModule,
     CheckboxModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    Tooltip
   ],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss'

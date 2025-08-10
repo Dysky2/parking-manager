@@ -78,7 +78,7 @@
         >
             <ng-template pTemplate="caption">
                 <div class="flex justify-between items-center">
-                    <h2 class="text-xl font-bold">Aktywne Sesje Parkowania</h2>
+                    <h2 class="text-xl font-bold">Active parking sessions</h2>
                 </div>
             </ng-template>
 
@@ -150,7 +150,7 @@
         >
             <ng-template pTemplate="caption">
                 <div class="flex justify-between items-center">
-                    <h2 class="text-xl font-bold">Rezerwacje do Akceptacji</h2>
+                    <h2 class="text-xl font-bold">Reservation to approval</h2>
                 </div>
             </ng-template>
 
@@ -184,6 +184,8 @@
                     <td style="text-align: center;">
                         <p-button
                             icon="pi pi-check"
+                            [disabled]="!isAdminLogged"
+                            [pTooltip]="isAdminLogged ? 'Edit' : 'Admin access required'"
                             (click)="acceptReservation(reservation.parkingSpaceId)"
                             styleClass="p-button-success p-button-outlined action-button-circle"
                             tooltipPosition="left"

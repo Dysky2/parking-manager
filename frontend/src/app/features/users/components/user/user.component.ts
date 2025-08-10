@@ -142,10 +142,7 @@ export class UserComponent implements OnInit {
             this.deleteUserIfNotAdmin(loggedUser, user);
           }
         })
-      },
-      reject: () => {
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
-      },
+      }
     })
   }
 

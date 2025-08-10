@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ParkingSpace } from '../models/parkingSpace.modal';
 import { HttpParams } from '@angular/common/http';
+import { environment } from "../../../environments/environment.prod";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ParkingSpaceService {
 
-  private apiUrl = "https://parking-manager-crdt.onrender.com/api/parking";
+  private apiUrl = environment.apiUrl + '/api/parking';
 
   constructor(private http: HttpClient) { }
 

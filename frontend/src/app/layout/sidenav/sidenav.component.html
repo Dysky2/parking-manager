@@ -8,14 +8,21 @@
   <nav class="flex-grow pt-6">
     <ul class="px-4">
       <li *ngFor="let link of navLinks" class="mb-2">
-        <a [routerLink]="link.path" routerLinkActive #rla="routerLinkActive" [routerLinkActiveOptions]="{exact: true}"
-           class="flex items-center p-2 rounded-lg transition-colors duration-200"
-           [ngClass]="{
-             'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md': rla.isActive,
-             'text-slate-600 hover:bg-slate-100': !rla.isActive
-           }">
-          
-          <span class="w-7 h-7 flex items-center justify-center rounded-lg mr-3" 
+        <a 
+          [pTooltip]="link.neeToUserLogged && !authService.isUserLogged() ? 'Login required' : ''" 
+          tooltipPosition="bottom" 
+          [routerLink]="link.path"
+          (click)="link.neeToUserLogged && !authService.isUserLogged() ? '' : emitNewPage(link.label)"
+          routerLinkActive
+          #rla="routerLinkActive"
+          [routerLinkActiveOptions]="{exact: true}"
+          class="flex items-center p-2 rounded-lg transition-colors duration-200"
+          [ngClass]="{
+            'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md': rla.isActive,
+            'text-slate-600 hover:bg-slate-100': !rla.isActive
+          }">
+
+          <span class="w-7 h-7 flex items-center justify-center rounded-lg mr-3"
                 [ngClass]="{'bg-white shadow-sm': rla.isActive}">
             <mat-icon class="text-xl" [ngClass]="{'text-purple-600': rla.isActive, 'text-slate-500': !rla.isActive}">
               {{ link.icon }}

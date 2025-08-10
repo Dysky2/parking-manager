@@ -5,7 +5,7 @@
   <p-tabs value="0">
     <p-tablist>
       <p-tab value='0'>My Profile</p-tab>
-      <p-tab [disabled]="loggedUser?.role != 'Admin'" value='1'>Application Settings</p-tab>
+      <p-tab [disabled]="loggedUser?.role != 'Admin'" value='1' [pTooltip]="loggedUser?.role != 'Admin' ? '' : 'This section is available for administrators only' ">Application Settings</p-tab>
     </p-tablist>
     <p-tabpanels>
       <p-tabpanel value="0">

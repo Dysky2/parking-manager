@@ -7,7 +7,6 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SidebarModule } from 'primeng/sidebar';
 
-
 @Component({
   selector: 'app-main-layout',
   standalone: true,
@@ -19,7 +18,7 @@ export class MainLayoutComponent {
 
   isSidebarVisible = false;
 
-toggleSidebar() {
+  toggleSidebar() {
     this.isSidebarVisible = !this.isSidebarVisible;
   }
 }

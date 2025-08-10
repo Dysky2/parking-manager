@@ -7,12 +7,13 @@ import { User } from '../../core/models/user.model';
 import { ButtonModule } from 'primeng/button';
 import  { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import {SidebarModule} from "primeng/sidebar";
-import {OverlayPanelModule} from "primeng/overlaypanel";
-import {TabViewModule} from "primeng/tabview";
+import { OverlayPanelModule } from "primeng/overlaypanel";
+import { TabViewModule } from "primeng/tabview";
 import { PopoverModule } from 'primeng/popover';
 import { BadgeModule } from 'primeng/badge';
+import { NavBreadcrumbsService } from '../../core/services/nav-breadcrumbs.service';
 
 @Component({
   selector: 'app-nav',
@@ -33,18 +34,17 @@ export class NavComponent implements OnInit {
 
   activeTab: string = 'inbox';
 
-  setActiveTab(tab: string): void {
-    this.activeTab = tab;
-  }
-
   userMenuItems: MenuItem[] = [];
 
   $currentUser: Observable<User | null>;
   $authStateChecked: Observable<boolean>;
 
-  constructor(private authService: AuthService) {
+  $currentBreadcrumbs: Observable<string>;
+
+  constructor(private authService: AuthService, private navBreadcrumbsService: NavBreadcrumbsService) {
     this.$currentUser = this.authService.currentUser$;
     this.$authStateChecked = this.authService.authStateChecked$;
+    this.$currentBreadcrumbs = this.navBreadcrumbsService.currentPage;
   }
 
   ngOnInit(): void {
